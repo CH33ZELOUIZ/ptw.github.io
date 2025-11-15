@@ -50,7 +50,7 @@ header {
    min-height: 500px;
    width: 100%;
    background: linear-gradient(rgba(0, 0, 0, 0.55),
-   rgba(0, 0, 0, 0.75)), url('https://news.illinois.edu/files/6367/521601/114702.jpg') no-repeat top center;
+   rgba(0, 0, 0, 0.75)), url('/images/image.png') no-repeat top center;
    background-size: cover !important;
 	-webkit-background-size: cover !important;
    text-align: center;
