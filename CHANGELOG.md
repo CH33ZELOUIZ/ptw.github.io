@@ -8,8 +8,15 @@ The newest entry is labeled `HEAD` because this generated file lives inside the 
 
 ### `HEAD` — Update Personal Tech Wiz website
 - Author: `CH33ZE`
-- Diff: `1 file changed, 3082 insertions(+)`
-- Change counts: `files=1, insertions=3082, deletions=0`
+- Diff: `1 file changed, 2 insertions(+), 2 deletions(-)`
+- Change counts: `files=1, insertions=2, deletions=2`
+- Changed paths:
+  - `M	CHANGELOG.md`
+
+### `699153b` — Update Personal Tech Wiz website
+- Author: `CH33ZE`
+- Diff: `1 file changed, 3091 insertions(+)`
+- Change counts: `files=1, insertions=3091, deletions=0`
 - Changed paths:
   - `A	CHANGELOG.md`
 
