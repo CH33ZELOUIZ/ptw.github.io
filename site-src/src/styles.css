@@ -14,8 +14,8 @@
   --purple-dark: #6845b9;
   --green: #a6c98d;
   --max: 1180px;
-  --sans: Arial, Helvetica, sans-serif;
-  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: Inter, "Segoe UI", Arial, Helvetica, sans-serif;
+  --serif: Inter, "Segoe UI", Arial, Helvetica, sans-serif;
   --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 }
 
@@ -533,10 +533,75 @@ h1 em, h2 em {
 
 :focus-visible { outline: 2px solid var(--purple); outline-offset: 3px; }
 
+/* Simpler Personal Tech Wiz pass: less editorial, more clean portfolio. */
+.home-hero { padding-top: 66px; background: var(--night); }
+.hero-layout { grid-template-columns: 1.05fr .95fr; gap: 48px; padding-bottom: 54px; }
+.hero-copy h1,
+.page-title h1,
+.personal-copy h2,
+.section-heading h2,
+.selected-work h2,
+.learning-quote,
+.repair-services h2,
+.site-footer h2,
+.field-notes-heading h2,
+.case-main h2 {
+  font-family: var(--sans);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+}
+.hero-copy h1 { max-width: 760px; font-size: clamp(3.2rem, 7vw, 5.6rem); line-height: 1; }
+.hero-copy h1 em, h1 em, h2 em { color: inherit; font-family: inherit; font-style: normal; font-weight: inherit; }
+.hero-intro { font-size: clamp(1.05rem, 1.8vw, 1.28rem); }
+.hero-note { padding: 16px 18px; border: 1px solid var(--line); border-left: 4px solid var(--purple); border-radius: 16px; background: rgba(255,255,255,.035); }
+.button, .main-nav .nav-email, .menu-button { border-radius: 999px; }
+.button:hover { transform: none; }
+.hero-photo { padding: 0; }
+.hero-photo::before { display: none; }
+.hero-photo img { aspect-ratio: 16 / 12; border-radius: 22px; filter: saturate(.88) contrast(1.02); }
+.hero-photo figcaption { right: 14px; bottom: 14px; border-radius: 14px; font-family: var(--sans); }
+.hero-ledger { gap: 12px; border: 0; padding-bottom: 28px; }
+.hero-ledger span { min-height: 58px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.025); }
+.paper-section, .dark-section, .learning-section, .range-section, .repair-services { padding: 72px 0; }
+.personal-copy h2, .section-heading h2, .selected-work h2, .learning-quote, .repair-services h2, .site-footer h2 { font-size: clamp(2.15rem, 4vw, 3.45rem); line-height: 1.08; }
+.personal-copy .large-copy { margin-top: 24px; font-family: var(--sans); font-size: clamp(1.05rem, 1.7vw, 1.28rem); line-height: 1.6; }
+.field-notes-grid { padding-top: 34px; }
+.field-notes-heading h2 { font-size: clamp(2rem, 3.8vw, 3rem); line-height: 1.1; }
+.note-card { min-height: 0; border-radius: 18px; box-shadow: none; background: #f7f4ec; }
+.note-card:nth-child(2), .note-card:nth-child(3) { transform: none; }
+.note-card h3 { margin-top: 28px; font-family: var(--sans); font-weight: 800; }
+.practice-list { margin-top: 42px; }
+.practice-list article { grid-template-columns: 45px .5fr 1fr; padding: 26px 0; }
+.practice-list h3, .range-grid h3, .experience-list h2, .resume-bottom h2, .service-group > h2, .service-directory h3, .repair-services li strong { font-family: var(--sans); font-weight: 800; }
+.selected-grid { gap: 48px; }
+.work-index a { border: 1px solid var(--paper-line); border-radius: 16px; padding: 18px; margin-bottom: 12px; }
+.work-index { border-top: 0; }
+.learning-section, .repair-services { background: #211d2e; }
+.page-shell { padding-top: 64px; }
+.page-title { padding-bottom: 52px; }
+.page-title h1 { font-size: clamp(2.6rem, 5.5vw, 4.6rem); line-height: 1.05; }
+.case-study { padding: 36px 0; }
+.case-main h2 { font-size: clamp(1.8rem, 3.2vw, 2.8rem); line-height: 1.12; }
+.range-section { margin-top: 72px; }
+.resume-summary > div:last-child p { font-family: var(--sans); font-size: 1.12rem; line-height: 1.65; }
+.resume-highlights { gap: 12px; border: 0; }
+.resume-highlights p { border: 1px solid var(--paper-line); border-radius: 16px; background: #f7f4ec; }
+.service-directory { gap: 26px; }
+.service-directory article { min-height: 76px; }
+.photo { border-radius: 16px; }
+.site-footer { padding-top: 66px; }
+.footer-email { font-family: var(--sans); font-weight: 800; }
+
+@media (max-width: 560px) {
+  .hero-copy h1 { font-size: clamp(2.75rem, 15vw, 4.1rem); line-height: 1; }
+  .personal-copy h2, .section-heading h2, .selected-work h2, .learning-quote, .repair-services h2, .site-footer h2 { font-size: clamp(2rem, 10vw, 3rem); }
+  .page-title h1 { font-size: clamp(2.35rem, 12vw, 3.4rem); line-height: 1.05; }
+}
+
 @media (max-width: 1000px) {
   .main-nav { gap: 18px; }
   .hero-layout { grid-template-columns: 1fr .72fr; gap: 45px; }
-  .hero-copy h1 { font-size: clamp(4.2rem, 8vw, 6.5rem); }
+  .hero-copy h1 { font-size: clamp(3rem, 6.8vw, 5rem); }
   .selected-grid { gap: 50px; }
   .range-grid { grid-template-columns: repeat(2, 1fr); }
   .photo-grid { grid-template-columns: repeat(3, 1fr); }
@@ -565,7 +630,7 @@ h1 em, h2 em {
   .main-nav a.active { border-bottom-color: var(--purple); }
   .main-nav .nav-email { justify-content: center; margin-top: 12px; }
   .hero-layout { grid-template-columns: 1fr; gap: 60px; }
-  .hero-copy h1 { font-size: clamp(4rem, 14vw, 6rem); }
+  .hero-copy h1 { font-size: clamp(3rem, 11vw, 4.8rem); }
   .hero-photo { width: min(100%, 560px); margin-inline: auto; }
   .hero-ledger { grid-template-columns: repeat(2, 1fr); }
   .hero-ledger span:last-child { grid-column: span 2; }
@@ -592,7 +657,7 @@ h1 em, h2 em {
   .brand small { display: none; }
   .home-hero { padding-top: 62px; background: var(--night); }
   .hero-layout { gap: 48px; padding-bottom: 55px; }
-  .hero-copy h1 { margin-top: 16px; font-size: clamp(3.45rem, 18.5vw, 5rem); line-height: .86; }
+  .hero-copy h1 { margin-top: 16px; font-size: clamp(2.65rem, 13vw, 3.9rem); line-height: 1; }
   .hero-copy h1 em { margin-left: .1em; }
   .hero-intro { font-size: 1.08rem; }
   .hero-actions { display: grid; align-items: stretch; gap: 15px; }

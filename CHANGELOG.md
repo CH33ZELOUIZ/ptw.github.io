@@ -10,6 +10,13 @@ The newest entry is labeled `HEAD` because this generated file lives inside the 
 - Author: `CH33ZE`
 - Diff: `current HEAD diff details omitted to avoid self-referential changelog churn`
 
+### `71ece09` — Update Personal Tech Wiz website
+- Author: `CH33ZE`
+- Diff: `1 file changed, 64 insertions(+), 1 deletion(-)`
+- Change counts: `files=1, insertions=64, deletions=1`
+- Changed paths:
+  - `M	CHANGELOG.md`
+
 ### `821a7ba` — refactor: humanize portfolio layout and copy
 - Author: `CH33ZE`
 - Diff: `10 files changed, 1104 insertions(+), 2319 deletions(-)`

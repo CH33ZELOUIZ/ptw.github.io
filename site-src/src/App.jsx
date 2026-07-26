@@ -223,15 +223,15 @@ function HomePage() {
       <section className="home-hero">
         <div className="wrap hero-layout">
           <div className="hero-copy">
-            <p className="kicker">Hollywood, Florida · one-man tech shop</p>
-            <h1>One person.<br /><em>A lot of tech.</em></h1>
+            <p className="kicker">Your Personal Tech Wiz · Hollywood, Florida</p>
+            <h1>Your Personal Tech Wiz.</h1>
             <p className="hero-intro">
-              I&apos;m Jeffrey. I work on computers, servers, networks, websites, AI tools, game consoles,
-              phones, and the odd device nobody else wants to touch.
+              I&apos;m Jeffrey. I&apos;m the one-man tech guy people call when a computer, server, website,
+              console, phone, network, or random device needs help.
             </p>
             <p className="hero-note">
-              If I don&apos;t know it yet, I learn it. Fast. That usually means documentation open on one screen,
-              a safe test on another, and notes so I do not solve the same problem twice.
+              I work across operating systems, hardware, homelab services, AI tools, and repairs. If I do not
+              know something yet, I learn it fast, test it safely, and keep going until it makes sense.
             </p>
             <div className="hero-actions">
               <RouteLink to="work" className="button">See what I work on</RouteLink>
@@ -253,9 +253,9 @@ function HomePage() {
 
       <section className="paper-section">
         <div className="wrap personal-grid">
-          <div className="side-note">Why “Personal Tech Wiz”?</div>
+          <div className="side-note">What that means</div>
           <div className="personal-copy">
-            <h2>Jack of all trades.<br /><em>On purpose.</em></h2>
+            <h2>One guy for a lot of tech problems.</h2>
             <p className="large-copy">
               Some people stay in one lane. I like seeing how the lanes connect. A slow app might really be a disk problem.
               A broken stream might be DNS, a container path, or a bad client. A controller repair can turn into a software
@@ -275,8 +275,8 @@ function HomePage() {
         <div className="wrap field-notes-grid">
           <div className="field-notes-heading">
             <p className="kicker">How I work</p>
-            <h2>Not a résumé buzzword guy.<br /><em>A figure-it-out guy.</em></h2>
-            <p>Employers get somebody who can sit with the user, trace the system, open the device, read the logs, and stay with the problem until the answer is real.</p>
+            <h2>Straightforward help. Real follow-through.</h2>
+            <p>Employers get somebody who can talk to the person having the problem, trace the system, open the device, read the logs, and stay with it until the answer is real.</p>
           </div>
           <div className="note-board">
             {fieldNotes.map(([title, body], index) => (
@@ -358,8 +358,8 @@ function WorkPage() {
         <PageTitle
           index="01"
           kicker="Work and projects"
-          title={<>This is what I spend<br />my time <em>figuring out.</em></>}
-          intro="Some projects started because I needed them. Others started because a friend, family member, or community needed them. Most are still growing."
+          title={<>The stuff I build, fix, and run.</>}
+          intro="This is the bigger technical side of Personal Tech Wiz: homelab services, AI tools, dashboards, media systems, game servers, and repair work. Most of it started because I needed it or someone around me did."
         />
         <div className="case-list">
           {systems.map((system) => (
@@ -410,8 +410,8 @@ function ResumePage() {
         <PageTitle
           index="02"
           kicker="Résumé"
-          title={<>Technical enough to fix it.<br /><em>Human enough to explain it.</em></>}
-          intro="My background is a mix of IT, day-to-day operations, customer service, management, and self-taught technical work. That mix is useful: I can deal with the system and the person waiting on it."
+          title={<>Resume and skills.</>}
+          intro="I am your Personal Tech Wiz: customer support, IT help, server work, AI tools, repair work, and the patience to learn whatever the job needs next."
         />
         <section className="resume-summary">
           <div className="resume-contact">
@@ -469,8 +469,8 @@ function ServicesPage() {
         <PageTitle
           index="03"
           kicker="Services and access"
-          title={<>One front door for<br />the things <em>I host.</em></>}
-          intro="This will become the public directory for my community, media, game, and library services. The real addresses stay private until I am ready to open each one."
+          title={<>Hosted services.</>}
+          intro="A simple directory for the things I host: community chat, Minecraft, media, music, comics, games, and small tools. The real links stay private until each service is ready."
         />
         <div className="privacy-line"><Check size={16} /> No private hostnames, addresses, or sign-in pages are exposed here.</div>
         <section className="service-directory" aria-label="Hosted service directory">
@@ -542,10 +542,10 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="wrap footer-main">
-        <div><p className="kicker">Need a tech generalist?</p><h2>Tell me what you are trying to solve.</h2></div>
-        <div><a className="footer-email" href="mailto:personaltechwiz@gmail.com">personaltechwiz@gmail.com <ArrowUpRight size={22} /></a><p>IT support · servers · AI · web tools · repair</p></div>
+        <div><p className="kicker">Your Personal Tech Wiz</p><h2>Got a tech problem or a job opening?</h2></div>
+        <div><a className="footer-email" href="mailto:personaltechwiz@gmail.com">personaltechwiz@gmail.com <ArrowUpRight size={22} /></a><p>Computers · servers · AI · websites · consoles · repairs</p></div>
       </div>
-      <div className="wrap footer-bottom"><Brand /><span>© {new Date().getFullYear()} Jeffrey Yampol · Built with React</span></div>
+      <div className="wrap footer-bottom"><Brand /><span>© {new Date().getFullYear()} Jeffrey Yampol</span></div>
     </footer>
   )
 }

@@ -14,19 +14,19 @@ describe('Personal Tech Wiz portfolio', () => {
     window.location.hash = '#/'
   })
 
-  it('opens with Jeffrey’s personal technology-generalist positioning', () => {
+  it('opens with Jeffrey’s Personal Tech Wiz positioning', () => {
     render(<App />)
-    expect(screen.getByRole('heading', { name: /one person.*a lot of tech/i })).toBeInTheDocument()
-    expect(screen.getByText(/if i don't know it yet, i learn it/i)).toBeInTheDocument()
-    expect(screen.getByText(/jack of all trades/i)).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /your personal tech wiz/i })).toBeInTheDocument()
+    expect(screen.getByText(/one-man tech guy/i)).toBeInTheDocument()
+    expect(screen.getByText(/learn it fast/i)).toBeInTheDocument()
+    expect(screen.getByText(/one guy for a lot of tech problems/i)).toBeInTheDocument()
     expect(screen.getAllByText(/linux, windows, macos, ios, android/i).length).toBeGreaterThan(0)
-    expect(screen.getByText(/figure-it-out guy/i)).toBeInTheDocument()
   })
 
   it('organizes detailed projects on a separate Work view', () => {
     render(<App />)
     go('#/work')
-    expect(screen.getByRole('heading', { name: /this is what i spend.*figuring out/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /the stuff i build, fix, and run/i })).toBeInTheDocument()
     expect(screen.getByText('A homelab that has to work, not just look good in a rack.')).toBeInTheDocument()
     expect(screen.getByText(/ai that can do useful work/i)).toBeInTheDocument()
     expect(screen.getByText(/i am not tied to one stack/i)).toBeInTheDocument()
