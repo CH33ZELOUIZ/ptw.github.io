@@ -224,30 +224,31 @@ function HomePage() {
       <section className="home-hero">
         <div className="wrap hero-layout">
           <div className="hero-copy">
-            <p className="kicker">Friendly tech help · Your Personal Tech Wiz</p>
-            <h1>Your Personal<br /><em>Tech Wiz.</em></h1>
+            <p className="kicker">Friendly tech help from Jeffrey</p>
+            <h1>Your Personal Tech Wiz.</h1>
             <p className="hero-intro">
-              Hi, I&apos;m Jeffrey. I help with computers, phones, consoles, websites, servers, networks,
-              and the random tech problems that do not fit neatly in one box.
+              Hey, I&apos;m Jeffrey. I fix, set up, explain, and build tech for people who just want it
+              to work without getting talked down to.
             </p>
             <p className="hero-note">
-              Personal Tech Wiz is simple: tell me what is acting up, what you want working, or what you want built.
-              I will look at it, explain it clearly, and keep learning until there is a real answer.
+              Bring me the weird problem: a slow computer, a broken account, a server idea, a website,
+              a console repair, or a setup nobody else wants to untangle. I will listen first, check the
+              real cause, and keep at it until there is a clear next step.
             </p>
             <div className="hero-actions">
-              <RouteLink to="skills" className="button">See my skills</RouteLink>
+              <a className="button" href="mailto:jeffrey@personaltechwiz.com">Email me</a>
+              <RouteLink to="skills" className="quiet-link">See my skills</RouteLink>
               <RouteLink to="resume" className="quiet-link">Read my resume</RouteLink>
-              <RouteLink to="services" className="quiet-link">Hosted services</RouteLink>
             </div>
           </div>
           <figure className="hero-photo">
             <img src="/assets/gallery/work-01.jpg" alt="Circuit board inspection at the Personal Tech Wiz repair bench" />
-            <figcaption><span>At the bench</span> Diagnosis before guessing.</figcaption>
+            <figcaption><span>At the bench</span> I check first, then fix.</figcaption>
           </figure>
         </div>
-        <div className="wrap hero-ledger" aria-label="Areas Jeffrey works in">
-          {['IT support', 'Linux & servers', 'AI & automation', 'Web tools', 'Hardware repair'].map((item, index) => (
-            <span key={item}><b>0{index + 1}</b>{item}</span>
+        <div className="wrap hero-ledger" aria-label="Areas Jeffrey can help with">
+          {['Computer help', 'Phones & devices', 'Linux servers', 'Websites & tools', 'Repair bench'].map((item) => (
+            <span key={item}>{item}</span>
           ))}
         </div>
       </section>
@@ -256,16 +257,15 @@ function HomePage() {
         <div className="wrap personal-grid">
           <div className="side-note">Why Personal Tech Wiz?</div>
           <div className="personal-copy">
-            <h2>Tech help from one person who cares enough to figure it out.</h2>
+            <h2>One person for the messy middle of tech.</h2>
             <p className="large-copy">
-              Most tech problems are connected. A slow computer might be a storage issue. A broken stream might be DNS,
-              a bad app setting, or a network problem. A controller repair can turn into a software recovery job.
-              I like chasing the real cause instead of guessing.
+              A lot of tech problems do not belong to one neat category. The app, the account, the router,
+              the computer, the server, and the device can all be part of the same headache.
             </p>
             <p>
-              I move between Linux, Windows, macOS, iOS, Android, servers, PCs, Macs, phones, tablets, consoles,
-              handhelds, controllers, storage, networking gear, and smart-home devices. I do not pretend to know every
-              answer on day one. I know how to learn fast, test safely, and explain what I find.
+              I am comfortable moving between Linux, Windows, macOS, iOS, Android, servers, PCs, Macs, phones,
+              tablets, consoles, handhelds, controllers, storage, networking gear, and smart-home devices. If I do
+              not know the answer yet, I slow down, read, test, and explain what I find in normal words.
             </p>
           </div>
         </div>
@@ -275,7 +275,7 @@ function HomePage() {
         <div className="wrap field-notes-grid">
           <div className="field-notes-heading">
             <p className="kicker">How I work</p>
-            <h2>Friendly help.<br /><em>Real follow-through.</em></h2>
+            <h2>Listen, check, fix, explain.</h2>
             <p>You get somebody who can listen first, explain without talking down, open the device or logs when needed, and stay with the problem until the answer is real.</p>
           </div>
           <div className="note-board">
@@ -294,7 +294,7 @@ function HomePage() {
         <div className="wrap">
           <div className="section-heading">
             <p className="kicker">How I can help</p>
-            <h2>Fix problems.<br />Set things up.<br />Make tech easier.</h2>
+            <h2>Fix problems, set things up, and make tech easier.</h2>
           </div>
           <div className="practice-list">
             <article>
@@ -320,8 +320,8 @@ function HomePage() {
         <div className="wrap selected-grid">
           <div>
             <p className="kicker">Skills in real life</p>
-            <h2>Here are the areas I work in most.</h2>
-            <RouteLink to="skills">See the full skills page</RouteLink>
+            <h2>The main things I help with.</h2>
+            <RouteLink to="skills">Open the full skills page</RouteLink>
           </div>
           <div className="work-index">
             {systems.slice(0, 4).map((system) => (
@@ -358,7 +358,7 @@ function SkillsPage() {
         <PageTitle
           index="01"
           kicker="Skills and examples"
-          title={<>Skills, tools,<br />and real <em>examples.</em></>}
+          title={<>Skills and examples.</>}
           intro="A cleaner look at what I can help with: everyday IT support, operating systems, servers, websites, AI tools, hosted services, game servers, and repair bench work."
         />
         <div className="case-list">
@@ -410,7 +410,7 @@ function ResumePage() {
         <PageTitle
           index="02"
           kicker="Resume"
-          title={<>Resume, skills,<br />and real <em>experience.</em></>}
+          title={<>Resume, skills, and experience.</>}
           intro="I am your Personal Tech Wiz: customer support, IT help, server work, AI tools, repair work, and the patience to learn whatever the job needs next."
         />
         <section className="resume-summary">
@@ -447,7 +447,7 @@ function ResumePage() {
             <p>Ida Crown Jewish Academy<br /><span>2017–2018</span></p>
           </div>
           <div>
-            <div className="resume-section-label">Work skills</div>
+            <div className="resume-section-label">Practical skills</div>
             <div className="plain-columns">
               <ul><li>Technical support</li><li>Desktop support</li><li>Networking</li><li>Operating systems</li><li>Software troubleshooting</li><li>Hardware diagnosis</li></ul>
               <ul><li>Customer service</li><li>Store operations</li><li>Employee training</li><li>Inventory</li><li>Public speaking</li><li>Problem solving</li></ul>
