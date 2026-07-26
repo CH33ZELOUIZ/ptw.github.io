@@ -4,11 +4,74 @@ This dated backlog is generated from git history for the `ptw.github.io` public 
 Use it to review what changed over time directly from GitHub.
 The newest entry is labeled `HEAD` because this generated file lives inside the same commit it describes.
 
-## 2026-06-19
+## 2026-07-26
 
 ### `HEAD` — Update Personal Tech Wiz website
 - Author: `CH33ZE`
 - Diff: `current HEAD diff details omitted to avoid self-referential changelog churn`
+
+### `821a7ba` — refactor: humanize portfolio layout and copy
+- Author: `CH33ZE`
+- Diff: `10 files changed, 1104 insertions(+), 2319 deletions(-)`
+- Change counts: `files=10, insertions=1104, deletions=2319`
+- Changed paths:
+  - `D	assets/index-B4cERLjJ.js`
+  - `A	assets/index-C11OLdyd.js`
+  - `A	assets/index-D-MGO3zy.css`
+  - `D	assets/index-V8Os8u1r.css`
+  - `M	index.html`
+  - `M	site-src/index.html`
+  - `M	site-src/src/App.jsx`
+  - `M	site-src/src/App.test.jsx`
+  - `M	site-src/src/styles.css`
+  - `M	site-src/src/test-setup.js`
+
+## 2026-07-25
+
+### `688efb0` — feat: overhaul portfolio as React site
+- Author: `CH33ZE`
+- Diff: `30 files changed, 4650 insertions(+), 244 deletions(-)`
+- Change counts: `files=30, insertions=4650, deletions=244`
+- Changed paths:
+  - `A	.gitignore`
+  - `M	CNAME`
+  - `A	assets/index-B4cERLjJ.js`
+  - `A	assets/index-V8Os8u1r.css`
+  - `A	favicon.svg`
+  - `M	index.html`
+  - `A	package-lock.json`
+  - `A	package.json`
+  - `A	public/CNAME`
+  - `A	public/assets/gallery/work-01.jpg`
+  - `A	public/assets/gallery/work-02.jpg`
+  - `A	public/assets/gallery/work-03.jpg`
+  - `A	public/assets/gallery/work-04.jpg`
+  - `A	public/assets/gallery/work-05.jpg`
+  - `A	public/assets/gallery/work-06.jpg`
+  - `A	public/assets/gallery/work-07.jpg`
+  - `A	public/assets/gallery/work-08.jpg`
+  - `A	public/assets/gallery/work-09.jpg`
+  - `A	public/assets/gallery/work-10.jpg`
+  - `A	public/assets/gallery/work-11.jpg`
+  - `A	public/assets/gallery/work-12.jpg`
+  - `A	public/favicon.svg`
+  - `A	site-src/index.html`
+  - `A	site-src/src/App.jsx`
+  - `A	site-src/src/App.test.jsx`
+  - `A	site-src/src/main.jsx`
+  - `A	site-src/src/styles.css`
+  - `A	site-src/src/test-setup.js`
+  - `D	styles.css`
+  - `A	vite.config.js`
+
+## 2026-06-19
+
+### `a5c033e` — Update Personal Tech Wiz website
+- Author: `CH33ZE`
+- Diff: `1 file changed, 6 insertions(+), 2 deletions(-)`
+- Change counts: `files=1, insertions=6, deletions=2`
+- Changed paths:
+  - `M	CHANGELOG.md`
 
 ### `8a36d8b` — Update Personal Tech Wiz website
 - Author: `CH33ZE`
