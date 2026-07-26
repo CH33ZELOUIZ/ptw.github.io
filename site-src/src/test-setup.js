@@ -11,3 +11,4 @@ class IntersectionObserverMock {
 }
 
 globalThis.IntersectionObserver = IntersectionObserverMock
+globalThis.scrollTo = () => {}

@@ -1,602 +1,593 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
-  ArrowDown,
   ArrowRight,
-  Bot,
+  ArrowUpRight,
   Boxes,
-  BrainCircuit,
-  BriefcaseBusiness,
-  ChevronRight,
-  CircleCheck,
-  Cloud,
-  Code2,
-  Cpu,
-  Database,
+  Check,
   ExternalLink,
+  Film,
   Gamepad2,
-  ContactRound as Linkedin,
-  GraduationCap,
-  HardDrive,
-  Headphones,
   Image as ImageIcon,
+  Library,
   Mail,
-  Map,
+  MapPin,
   Menu,
   MessageCircle,
-  MonitorCog,
+  Monitor,
   Music2,
-  Network,
-  Radio,
-  Server,
-  ShieldCheck,
-  Sparkles,
-  TerminalSquare,
+  Smartphone,
   Wrench,
   X,
 } from 'lucide-react'
 
-const navItems = [
-  ['About', 'about'],
-  ['Capabilities', 'capabilities'],
-  ['Projects', 'projects'],
-  ['Experience', 'experience'],
-  ['Services', 'portal'],
-  ['Bench', 'bench'],
+const routes = [
+  { key: 'home', label: 'Home', href: '#/' },
+  { key: 'work', label: 'Work', href: '#/work' },
+  { key: 'resume', label: 'Résumé', href: '#/resume' },
+  { key: 'services', label: 'Services', href: '#/services' },
+  { key: 'bench', label: 'Repair bench', href: '#/bench' },
 ]
 
-const capabilities = [
-  {
-    icon: Server,
-    label: 'Infrastructure',
-    title: 'Linux systems & homelab operations',
-    description:
-      'Deploying, connecting, securing, and maintaining self-hosted services with an operator-first approach.',
-    skills: ['Linux administration', 'Docker Compose', 'Tailscale', 'Cloudflare Tunnels', 'DNS & networking', 'Backups & recovery'],
-  },
-  {
-    icon: BrainCircuit,
-    label: 'Intelligence',
-    title: 'AI agents & practical automation',
-    description:
-      'Turning language models into useful workflows across chat, monitoring, research, administration, and support.',
-    skills: ['Hermes Agent', 'Multi-agent workflows', 'LLM routing', 'Discord & iMessage bots', 'Python & shell automation', 'Scheduled operations'],
-  },
-  {
-    icon: Code2,
-    label: 'Applications',
-    title: 'Web tools & service dashboards',
-    description:
-      'Building focused interfaces that make complicated infrastructure easier to understand and operate.',
-    skills: ['React & JavaScript', 'Responsive UI', 'REST APIs', 'Git & GitHub', 'Operations dashboards', 'Self-hosted deployment'],
-  },
-  {
-    icon: MonitorCog,
-    label: 'Support',
-    title: 'IT support & troubleshooting',
-    description:
-      'Patient, customer-focused diagnosis across computers, operating systems, networks, software, and connected devices.',
-    skills: ['Desktop support', 'Hardware diagnosis', 'Software troubleshooting', 'System upgrades', 'Help desk support', 'Customer communication'],
-  },
-  {
-    icon: HardDrive,
-    label: 'Platforms',
-    title: 'Media, storage & personal cloud',
-    description:
-      'Designing self-hosted ecosystems for video, music, books, photos, game libraries, storage, and automation.',
-    skills: ['Jellyfin', 'Navidrome', 'Komga', 'RomM', 'Immich', 'Media automation'],
-  },
-  {
-    icon: Wrench,
-    label: 'Hardware',
-    title: 'Repair, mods & old-tech rescue',
-    description:
-      'Careful teardown, diagnosis, repair, customization, and reuse of consoles, controllers, handhelds, phones, and PCs.',
-    skills: ['Console diagnosis', 'Controller mods', 'Shell & screen work', 'Software recovery', 'PC repair', 'Device refurbishment'],
-  },
-]
-
-const projects = [
+const systems = [
   {
     number: '01',
-    icon: Network,
-    eyebrow: 'Core infrastructure',
-    title: 'Resilient personal homelab',
-    summary:
-      'A multi-host Linux environment built to run real services reliably without turning day-to-day administration into a second job.',
-    details: ['Containerized service stacks', 'Private mesh networking', 'Secure public ingress', 'Firewalling, monitoring, backups, and recovery'],
-    accent: 'violet',
+    short: 'Homelab',
+    title: 'A homelab that has to work, not just look good in a rack.',
+    problem: 'I wanted one place for media, photos, game servers, automation, backups, and the tools I use every day. That meant learning how to keep a lot of moving parts from stepping on each other.',
+    work: 'I run Linux hosts, Docker Compose stacks, storage pools, private networking, remote access, DNS, tunnels, firewalls, monitoring, and recovery jobs. I also move workloads between machines when the hardware or the job calls for it.',
+    tools: ['Linux', 'Docker Compose', 'Tailscale', 'Cloudflare', 'nftables', 'SMB', 'Backups'],
   },
   {
     number: '02',
-    icon: Bot,
-    eyebrow: 'AI operations',
-    title: 'Connected agent ecosystem',
-    summary:
-      'AI assistants connected to Discord and iMessage for research, server work, scheduled checks, alerts, and hands-off administration.',
-    details: ['Hermes Agent gateways', 'Specialized agent roles', 'Provider routing and fallback', 'Automated monitoring and reporting'],
-    accent: 'blue',
+    short: 'AI systems',
+    title: 'AI that can do useful work instead of sitting in a chat box.',
+    problem: 'I wanted assistants that could help with real server work, answer people where they already talk, keep an eye on recurring jobs, and hand specialized problems to the right model or agent.',
+    work: 'I operate Hermes agents through Discord and iMessage, build role-specific gateways, schedule checks, connect tools, route between model providers, and keep permissions separated. The goal is practical help without giving an agent more access than it needs.',
+    tools: ['Hermes Agent', 'Discord', 'iMessage', 'Python', 'Model routing', 'Scheduled jobs', 'Webhooks'],
   },
   {
     number: '03',
-    icon: TerminalSquare,
-    eyebrow: 'Custom software',
-    title: 'CH33ZE Command Center',
-    summary:
-      'A purpose-built operations dashboard that turns a growing collection of hosts, apps, links, accounts, and tools into one usable control surface.',
-    details: ['Unified service visibility', 'Practical admin workflows', 'Responsive web interface', 'Designed around real homelab operations'],
-    accent: 'cyan',
+    short: 'Command Center',
+    title: 'One screen for the parts of my setup I actually need to see.',
+    problem: 'Bookmarks and terminal history stop being enough when services live on several machines. I needed a dashboard built around my setup, not a generic monitoring template.',
+    work: 'I built the CH33ZE Command Center to organize service health, admin links, accounts, files, host information, and routine controls. I keep refining it as the homelab changes.',
+    tools: ['React', 'JavaScript', 'APIs', 'Linux', 'Responsive UI', 'Service health'],
   },
   {
     number: '04',
-    icon: Database,
-    eyebrow: 'Self-hosted cloud',
-    title: 'Media & library platform',
-    summary:
-      'An integrated ecosystem for personal video, music, comics, photos, and game libraries with acquisition, organization, and health workflows.',
-    details: ['Jellyfin and media automation', 'Navidrome music library', 'Komga comics and RomM games', 'Immich photo management'],
-    accent: 'orange',
+    short: 'Personal cloud',
+    title: 'Media and libraries that I control.',
+    problem: 'Movies, music, comics, photos, and game collections all have different storage and metadata problems. I wanted them easy to use without handing the whole library to someone else’s cloud.',
+    work: 'I manage Jellyfin, Navidrome, Komga, RomM, Immich, acquisition tools, storage mounts, transcode limits, library cleanup, and the networking around them. I troubleshoot the ugly parts too: imports, permissions, paths, full disks, and bad metadata.',
+    tools: ['Jellyfin', 'Navidrome', 'Komga', 'RomM', 'Immich', 'Storage', 'Automation'],
   },
   {
     number: '05',
-    icon: Gamepad2,
-    eyebrow: 'Gaming infrastructure',
-    title: 'Minecraft community services',
-    summary:
-      'Managed game-server infrastructure with player-facing status, mapping, dashboards, cross-platform access, and safer operational controls.',
-    details: ['Server lifecycle operations', 'Web map integration', 'Community dashboards', 'Role-aware automation'],
-    accent: 'green',
+    short: 'Game services',
+    title: 'A Minecraft setup that players can use without me babysitting it.',
+    problem: 'Running the game is the easy part. The rest is updates, player access, maps, dashboards, permissions, backups, and making sure an admin shortcut cannot wreck the server.',
+    work: 'I manage the server, web map, player-facing dashboard, cross-platform access, service-only restarts, role-aware automation, and audit-friendly controls.',
+    tools: ['Minecraft', 'Bedrock access', 'Live map', 'Dashboards', 'Discord', 'Backups'],
   },
   {
     number: '06',
-    icon: Cpu,
-    eyebrow: 'Repair bench',
-    title: 'Electronics repair & restoration',
-    summary:
-      'Hands-on work that keeps older hardware useful through careful diagnosis, cleaning, parts replacement, software repair, and customization.',
-    details: ['Consoles and handhelds', 'Controllers and shell swaps', 'Computers and older phones', 'Reuse before replacement'],
-    accent: 'pink',
+    short: 'Repair bench',
+    title: 'Broken hardware is usually a question, not a dead end.',
+    problem: 'I hate throwing away a device before anyone has properly looked at it. Consoles, controllers, old computers, handhelds, and phones often have more life left than people think.',
+    work: 'I diagnose, clean, disassemble, replace parts, swap shells, prepare storage, recover software, test the result, and decide honestly when a repair is not worth the risk or cost.',
+    tools: ['Consoles', 'Controllers', 'Handhelds', 'PCs & Macs', 'Phones', 'Software recovery'],
   },
 ]
 
 const experience = [
   {
-    range: 'Mar 2023 — Present',
+    dates: 'March 2023 – present',
     role: 'IT Consultant / IT Systems Manager',
-    company: 'Renew Range Holdings · CareFree Living Center',
+    place: 'Renew Range Holdings · CareFree Living Center',
     location: 'Minneapolis, Minnesota',
-    body: 'Manage and maintain computer systems, internet connectivity, and connected devices. Provide technical support, troubleshooting, system upgrades, and hardware diagnosis to keep daily operations reliable.',
+    description: 'I maintain computers, internet service, and connected devices. I handle support requests, hardware problems, software troubleshooting, upgrades, and the day-to-day work that keeps technology out of everyone else’s way.',
   },
   {
-    range: 'Aug 2020 — Dec 2022',
+    dates: 'August 2020 – December 2022',
     role: 'Sales Associate',
-    company: 'Walgreens',
+    place: 'Walgreens',
     location: 'St. Louis, Missouri',
-    body: 'Supported customers and daily retail operations in a fast-paced environment while building strong service, communication, sales, and problem-solving skills.',
+    description: 'Customer service in a busy store taught me how to listen, explain things clearly, stay organized, and solve the problem in front of me without making the customer feel rushed.',
   },
   {
-    range: 'Jun 2019 — Oct 2020',
+    dates: 'June 2019 – October 2020',
     role: 'Assistant Store Manager',
-    company: 'Tutti Frutti Frozen Yogurt',
+    place: 'Tutti Frutti Frozen Yogurt',
     location: 'University City, Missouri',
-    body: 'Managed daily store operations, inventory, opening and closing, equipment maintenance, employee training, deliveries, and customer or technical issues.',
+    description: 'I handled opening and closing, inventory, equipment, deliveries, cleaning, employee training, customer issues, and whatever else needed attention that day.',
   },
   {
-    range: 'Dec 2019 — May 2020',
+    dates: 'December 2019 – May 2020',
     role: 'Sales Associate',
-    company: 'Schnuck Markets, Inc.',
+    place: 'Schnuck Markets, Inc.',
     location: 'Ladue, Missouri',
-    body: 'Delivered in-person customer support and contributed to organized, dependable front-line store operations.',
+    description: 'I supported customers and helped keep front-line store operations organized and dependable.',
   },
   {
-    range: 'Aug 2018 — Mar 2020',
+    dates: 'August 2018 – March 2020',
     role: 'Guest Speaker',
-    company: 'JCRC · Student-to-Student',
+    place: 'JCRC · Student-to-Student',
     location: 'Community education program',
-    body: 'Spoke with students about Jewish practices, holidays, life, Israel, and culture—developing confidence in public speaking and cross-cultural communication.',
+    description: 'I spoke with students about Jewish practices, holidays, daily life, Israel, and culture. It pushed me to get comfortable speaking to unfamiliar groups and answering honest questions.',
   },
 ]
 
-const serviceCards = [
-  { icon: MessageCircle, name: 'Discord Community', type: 'Community', status: 'Invite coming soon', tone: 'purple' },
-  { icon: Gamepad2, name: 'Minecraft Server', type: 'Game server', status: 'Address coming soon', tone: 'green' },
-  { icon: Map, name: 'Minecraft Live Map', type: 'World map', status: 'Private preview', tone: 'cyan' },
-  { icon: Radio, name: 'Jellyfin', type: 'Movies & television', status: 'Access coming soon', tone: 'blue' },
-  { icon: ImageIcon, name: 'Komga', type: 'Comics & manga', status: 'Access coming soon', tone: 'orange' },
-  { icon: Music2, name: 'Navidrome', type: 'Music streaming', status: 'Access coming soon', tone: 'pink' },
-  { icon: Gamepad2, name: 'RomM', type: 'Game library', status: 'Access coming soon', tone: 'violet' },
-  { icon: Cloud, name: 'More services', type: 'Projects & utilities', status: 'Directory in progress', tone: 'slate' },
+const serviceLinks = [
+  { group: 'Community', name: 'Discord', description: 'Community chat, support, and updates', status: 'Invite not public yet', icon: MessageCircle },
+  { group: 'Game server', name: 'Minecraft', description: 'Server access, rules, and status', status: 'Address not public yet', icon: Gamepad2 },
+  { group: 'Game server', name: 'Minecraft map', description: 'Live world map for players', status: 'Private preview', icon: MapPin },
+  { group: 'Media', name: 'Jellyfin', description: 'Movies and television', status: 'Access not public yet', icon: Film },
+  { group: 'Media', name: 'Navidrome', description: 'Personal music streaming', status: 'Access not public yet', icon: Music2 },
+  { group: 'Library', name: 'Komga', description: 'Comics and manga', status: 'Access not public yet', icon: Library },
+  { group: 'Library', name: 'RomM', description: 'Game library', status: 'Access not public yet', icon: Gamepad2 },
+  { group: 'Tools', name: 'More tools', description: 'Small projects, dashboards, and utilities', status: 'Directory in progress', icon: Boxes },
+]
+
+const fieldNotes = [
+  ['Operating systems', 'I move between Linux, Windows, macOS, iOS, Android, and oddball setups without treating any one platform like the only answer.'],
+  ['People and machines', 'I can explain the problem to a person, then go back to the terminal, workbench, router, or config file and actually fix it.'],
+  ['Learning fast', 'When I hit something new, I read the docs, test safely, verify the result, and keep notes so the fix becomes part of my toolkit.'],
+  ['One-man ownership', 'I like owning the whole chain: the device, the network, the service, the user experience, and the follow-through after it ships.'],
+]
+
+const resumeHighlights = [
+  'Hands-on IT support for computers, internet service, connected devices, upgrades, and troubleshooting.',
+  'Linux homelab operator running real services, remote access, storage, backups, firewalls, and monitoring.',
+  'AI automation builder using agents, scheduled jobs, Discord/iMessage gateways, and practical tool integrations.',
+  'Repair-minded technician comfortable with consoles, controllers, PCs, Macs, phones, and older hardware.',
 ]
 
 const gallery = Array.from({ length: 12 }, (_, index) => ({
   src: `/assets/gallery/work-${String(index + 1).padStart(2, '0')}.jpg`,
-  alt: `Personal Tech Wiz repair bench project ${index + 1}`,
-  label: ['Board inspection', 'Console teardown', 'Parts & cleanup', 'Device testing', 'Workbench detail', 'Modification prep', 'Hardware restoration', 'Final checks', 'Repair workflow', 'Component work', 'Console project', 'Bench project'][index],
+  alt: `Repair and modification project ${index + 1} from the Personal Tech Wiz bench`,
+  label: ['Board inspection', 'Console teardown', 'Parts and cleanup', 'Device testing', 'Workbench detail', 'Modification prep', 'Hardware restoration', 'Final check', 'Repair in progress', 'Component work', 'Console project', 'Bench project'][index],
 }))
 
-const repairServices = [
-  ['Console diagnosis', 'No power, no video, bad ports, read errors, overheating, failed storage, dirty internals, and mystery problems.'],
-  ['Handheld repair', 'DS-family systems, Switch hardware, shell and button work, screens, batteries, and general refurbishment.'],
-  ['Controller mods', 'Custom shells, button swaps, cleaning, drift troubleshooting, and personality upgrades.'],
-  ['Software mods', 'Homebrew-style setups, storage preparation, utilities, backups, and software recovery where appropriate.'],
-  ['Phone & small electronics', 'Older iPhone screens and small-device fixes when parts, tools, and repair risk make sense.'],
-  ['Junk-tech rescue', 'Broken computers and consoles evaluated for repair, reuse, parts, refurbishment, or future projects.'],
-]
+function currentRoute() {
+  const value = window.location.hash.replace(/^#\/?/, '').split('/')[0]
+  return routes.some((route) => route.key === value) ? value : 'home'
+}
 
-function Logo() {
+function useRoute() {
+  const [route, setRoute] = useState(currentRoute)
+  useEffect(() => {
+    const update = () => setRoute(currentRoute())
+    window.addEventListener('hashchange', update)
+    return () => window.removeEventListener('hashchange', update)
+  }, [])
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+    const label = routes.find((item) => item.key === route)?.label
+    document.title = route === 'home'
+      ? 'Jeffrey Yampol | Personal Tech Wiz'
+      : `${label} | Jeffrey Yampol · Personal Tech Wiz`
+  }, [route])
+  return route
+}
+
+function Brand() {
   return (
-    <a className="brand" href="#top" aria-label="Personal Tech Wiz home">
-      <span className="brand-mark" aria-hidden="true">PTW</span>
-      <span className="brand-copy">
-        <strong>Personal Tech Wiz</strong>
-        <small>Jeffrey Yampol</small>
-      </span>
+    <a className="brand" href="#/" aria-label="Personal Tech Wiz home">
+      <span className="brand-glyph">PTW</span>
+      <span><strong>Personal Tech Wiz</strong><small>Jeffrey Yampol</small></span>
     </a>
   )
 }
 
-function SectionIntro({ eyebrow, title, description, narrow = false }) {
+function Header({ route }) {
+  const [open, setOpen] = useState(false)
+  useEffect(() => setOpen(false), [route])
   return (
-    <div className={`section-intro ${narrow ? 'section-intro--narrow' : ''}`}>
-      <p className="eyebrow">{eyebrow}</p>
-      <h2>{title}</h2>
-      {description && <p className="section-lead">{description}</p>}
+    <header className="site-header">
+      <div className="header-inner">
+        <Brand />
+        <nav className={open ? 'main-nav main-nav--open' : 'main-nav'} aria-label="Main navigation">
+          {routes.map((item) => (
+            <a key={item.key} href={item.href} className={route === item.key ? 'active' : ''}>{item.label}</a>
+          ))}
+          <a className="nav-email" href="mailto:personaltechwiz@gmail.com">Email me <ArrowUpRight size={14} /></a>
+        </nav>
+        <button className="menu-button" type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label={open ? 'Close menu' : 'Open menu'}>
+          {open ? <X size={21} /> : <Menu size={21} />}
+        </button>
+      </div>
+    </header>
+  )
+}
+
+function PageTitle({ index, kicker, title, intro }) {
+  return (
+    <div className="page-title">
+      <div className="page-index">{index}</div>
+      <div>
+        <p className="kicker">{kicker}</p>
+        <h1>{title}</h1>
+        {intro && <p className="page-intro">{intro}</p>}
+      </div>
+    </div>
+  )
+}
+
+function RouteLink({ to, children, className = 'text-link' }) {
+  return <a className={className} href={`#/${to}`}>{children} <ArrowRight size={16} /></a>
+}
+
+function HomePage() {
+  return (
+    <>
+      <section className="home-hero">
+        <div className="wrap hero-layout">
+          <div className="hero-copy">
+            <p className="kicker">Hollywood, Florida · one-man tech shop</p>
+            <h1>One person.<br /><em>A lot of tech.</em></h1>
+            <p className="hero-intro">
+              I&apos;m Jeffrey. I work on computers, servers, networks, websites, AI tools, game consoles,
+              phones, and the odd device nobody else wants to touch.
+            </p>
+            <p className="hero-note">
+              If I don&apos;t know it yet, I learn it. Fast. That usually means documentation open on one screen,
+              a safe test on another, and notes so I do not solve the same problem twice.
+            </p>
+            <div className="hero-actions">
+              <RouteLink to="work" className="button">See what I work on</RouteLink>
+              <RouteLink to="resume" className="quiet-link">Read my résumé</RouteLink>
+              <RouteLink to="services" className="quiet-link">Hosted services</RouteLink>
+            </div>
+          </div>
+          <figure className="hero-photo">
+            <img src="/assets/gallery/work-01.jpg" alt="Circuit board inspection at the Personal Tech Wiz repair bench" />
+            <figcaption><span>At the bench</span> Diagnosis before guessing.</figcaption>
+          </figure>
+        </div>
+        <div className="wrap hero-ledger" aria-label="Areas Jeffrey works in">
+          {['IT support', 'Linux & servers', 'AI & automation', 'Web tools', 'Hardware repair'].map((item, index) => (
+            <span key={item}><b>0{index + 1}</b>{item}</span>
+          ))}
+        </div>
+      </section>
+
+      <section className="paper-section">
+        <div className="wrap personal-grid">
+          <div className="side-note">Why “Personal Tech Wiz”?</div>
+          <div className="personal-copy">
+            <h2>Jack of all trades.<br /><em>On purpose.</em></h2>
+            <p className="large-copy">
+              Some people stay in one lane. I like seeing how the lanes connect. A slow app might really be a disk problem.
+              A broken stream might be DNS, a container path, or a bad client. A controller repair can turn into a software
+              recovery job. Knowing a little about the whole chain helps me find the real problem.
+            </p>
+            <p>
+              I am comfortable moving between Linux, Windows, macOS, iOS, Android, and unfamiliar systems when the job
+              calls for it. The same goes for devices: servers, PCs, Macs, phones, tablets, networking gear, consoles,
+              handhelds, controllers, storage, and smart-home equipment. I do not pretend to know every answer. I know
+              how to research, test, and keep going until I understand what is happening.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="paper-section field-notes-section">
+        <div className="wrap field-notes-grid">
+          <div className="field-notes-heading">
+            <p className="kicker">How I work</p>
+            <h2>Not a résumé buzzword guy.<br /><em>A figure-it-out guy.</em></h2>
+            <p>Employers get somebody who can sit with the user, trace the system, open the device, read the logs, and stay with the problem until the answer is real.</p>
+          </div>
+          <div className="note-board">
+            {fieldNotes.map(([title, body], index) => (
+              <article key={title} className="note-card">
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="dark-section what-i-do">
+        <div className="wrap">
+          <div className="section-heading">
+            <p className="kicker">What I actually do</p>
+            <h2>Fix it. Run it.<br />Make it easier to use.</h2>
+          </div>
+          <div className="practice-list">
+            <article>
+              <span>01</span>
+              <h3>Keep technology running</h3>
+              <p>Support, updates, networks, operating systems, backups, storage, accounts, and the small issues that become big issues when nobody owns them.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Build the missing piece</h3>
+              <p>If the right dashboard, script, integration, or workflow does not exist, I will make a practical version and improve it while I use it.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Work on the physical thing</h3>
+              <p>I am just as happy with a screwdriver and a multimeter as I am in a terminal. Repair work keeps me patient and honest about what the hardware can do.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="paper-section selected-work">
+        <div className="wrap selected-grid">
+          <div>
+            <p className="kicker">A few ongoing projects</p>
+            <h2>Things I built because I needed them.</h2>
+            <RouteLink to="work">See all project notes</RouteLink>
+          </div>
+          <div className="work-index">
+            {systems.slice(0, 4).map((system) => (
+              <a href="#/work" key={system.number}>
+                <span>{system.number}</span>
+                <strong>{system.short}</strong>
+                <p>{system.title}</p>
+                <ArrowUpRight size={18} />
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="learning-section">
+        <div className="wrap learning-grid">
+          <div className="learning-quote">“I don&apos;t know yet” is a starting point, not an excuse.</div>
+          <ol>
+            <li><span>Read</span>Start with the documentation and the real error, not a random guess.</li>
+            <li><span>Test</span>Make the smallest safe test that can prove or disprove the idea.</li>
+            <li><span>Verify</span>Check the real result. A command completing is not the same as the job working.</li>
+            <li><span>Write it down</span>Keep the fix, the reason, and the rollback path for next time.</li>
+          </ol>
+        </div>
+      </section>
+    </>
+  )
+}
+
+function WorkPage() {
+  return (
+    <main className="page-shell">
+      <div className="wrap">
+        <PageTitle
+          index="01"
+          kicker="Work and projects"
+          title={<>This is what I spend<br />my time <em>figuring out.</em></>}
+          intro="Some projects started because I needed them. Others started because a friend, family member, or community needed them. Most are still growing."
+        />
+        <div className="case-list">
+          {systems.map((system) => (
+            <article className="case-study" key={system.number}>
+              <aside><span>{system.number}</span><strong>{system.short}</strong></aside>
+              <div className="case-main">
+                <h2>{system.title}</h2>
+                <div className="case-copy">
+                  <div><h3>Why it exists</h3><p>{system.problem}</p></div>
+                  <div><h3>What I handle</h3><p>{system.work}</p></div>
+                </div>
+                <div className="tool-line">{system.tools.map((tool) => <span key={tool}>{tool}</span>)}</div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+      <TechRange />
+    </main>
+  )
+}
+
+function TechRange() {
+  const groups = [
+    ['Operating systems', ['Linux', 'Windows', 'macOS', 'iOS', 'Android', 'Other systems as needed']],
+    ['Machines and devices', ['Servers', 'PCs', 'Macs', 'Phones', 'Tablets', 'Consoles', 'Handhelds', 'Networking gear']],
+    ['Infrastructure', ['Docker', 'Tailscale', 'Cloudflare', 'DNS', 'Firewalls', 'Storage', 'Backups', 'Monitoring']],
+    ['Software and automation', ['React', 'JavaScript', 'Python', 'Shell', 'REST APIs', 'GitHub', 'AI agents', 'Webhooks']],
+  ]
+  return (
+    <section className="range-section">
+      <div className="wrap">
+        <div className="section-heading compact"><p className="kicker">Range</p><h2>I am not tied to one stack.</h2></div>
+        <div className="range-grid">
+          {groups.map(([title, items]) => (
+            <div key={title}><h3>{title}</h3><ul>{items.map((item) => <li key={item}>{item}</li>)}</ul></div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function ResumePage() {
+  return (
+    <main className="page-shell resume-page">
+      <div className="wrap">
+        <PageTitle
+          index="02"
+          kicker="Résumé"
+          title={<>Technical enough to fix it.<br /><em>Human enough to explain it.</em></>}
+          intro="My background is a mix of IT, day-to-day operations, customer service, management, and self-taught technical work. That mix is useful: I can deal with the system and the person waiting on it."
+        />
+        <section className="resume-summary">
+          <div className="resume-contact">
+            <p>Jeffrey Yampol</p>
+            <span>Hollywood, Florida</span>
+            <a href="mailto:personaltechwiz@gmail.com">personaltechwiz@gmail.com</a>
+            <a href="https://www.linkedin.com/in/jeffrey-yampol-42756b187" target="_blank" rel="noreferrer">LinkedIn <ExternalLink size={13} /></a>
+          </div>
+          <div>
+            <h2>Professional summary</h2>
+            <p>I am a customer-focused technology generalist with hands-on experience in IT support, electronics troubleshooting, networking, system maintenance, Linux servers, self-hosted services, and AI automation. I solve problems patiently, explain them plainly, and learn unfamiliar systems quickly.</p>
+          </div>
+        </section>
+        <section className="resume-highlights" aria-label="Technical resume highlights">
+          {resumeHighlights.map((item) => <p key={item}>{item}</p>)}
+        </section>
+        <section className="experience-section">
+          <div className="resume-section-label">Experience</div>
+          <div className="experience-list">
+            {experience.map((item) => (
+              <article key={`${item.role}-${item.dates}`}>
+                <div className="experience-meta"><span>{item.dates}</span><small>{item.location}</small></div>
+                <div><h2>{item.role}</h2><h3>{item.place}</h3><p>{item.description}</p></div>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section className="resume-bottom">
+          <div>
+            <div className="resume-section-label">Education</div>
+            <h2>High School Diploma</h2>
+            <p>Yeshivat Kadimah High School<br /><span>2018–2021</span></p>
+            <p>Ida Crown Jewish Academy<br /><span>2017–2018</span></p>
+          </div>
+          <div>
+            <div className="resume-section-label">Work skills</div>
+            <div className="plain-columns">
+              <ul><li>Technical support</li><li>Desktop support</li><li>Networking</li><li>Operating systems</li><li>Software troubleshooting</li><li>Hardware diagnosis</li></ul>
+              <ul><li>Customer service</li><li>Store operations</li><li>Employee training</li><li>Inventory</li><li>Public speaking</li><li>Problem solving</li></ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  )
+}
+
+function ServicesPage() {
+  const groupedServices = [...new Set(serviceLinks.map((service) => service.group))]
+    .map((group) => [group, serviceLinks.filter((service) => service.group === group)])
+
+  return (
+    <main className="page-shell services-page">
+      <div className="wrap">
+        <PageTitle
+          index="03"
+          kicker="Services and access"
+          title={<>One front door for<br />the things <em>I host.</em></>}
+          intro="This will become the public directory for my community, media, game, and library services. The real addresses stay private until I am ready to open each one."
+        />
+        <div className="privacy-line"><Check size={16} /> No private hostnames, addresses, or sign-in pages are exposed here.</div>
+        <section className="service-directory" aria-label="Hosted service directory">
+          {groupedServices.map(([group, services]) => (
+            <div className="service-group" key={group}>
+              <h2>{group}</h2>
+              <div>
+                {services.map(({ name, description, status, icon: Icon }, index) => (
+                  <article key={name}>
+                    <span className="service-number">{String(index + 1).padStart(2, '0')}</span>
+                    <Icon size={21} />
+                    <div><h3>{name}</h3><p>{description}</p></div>
+                    <span className="service-state">{status}</span>
+                  </article>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+      </div>
+      <section className="repair-services">
+        <div className="wrap repair-service-grid">
+          <div>
+            <p className="kicker">Personal Tech Wiz repair</p>
+            <h2>Have something broken or a mod in mind?</h2>
+            <p>Send the model, what happened, what you want done, and a few clear photos. I will tell you whether it is a job I can take on and what I need to check first.</p>
+            <a className="button light-button" href="mailto:personaltechwiz@gmail.com">Start with an email <Mail size={16} /></a>
+          </div>
+          <ul>
+            <li><Wrench size={19} /><span><strong>Consoles and handhelds</strong>Diagnosis, cleaning, screens, shells, buttons, storage, software, and general restoration.</span></li>
+            <li><Gamepad2 size={19} /><span><strong>Controllers and mods</strong>Cleaning, shells, buttons, drift troubleshooting, and custom builds.</span></li>
+            <li><Monitor size={19} /><span><strong>Computers and operating systems</strong>PC and Mac troubleshooting, upgrades, cleanup, networking, and software recovery.</span></li>
+            <li><Smartphone size={19} /><span><strong>Phones and small electronics</strong>Older phone screens and small-device work when the parts and repair risk make sense.</span></li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  )
+}
+
+function BenchPage({ openImage }) {
+  return (
+    <main className="page-shell bench-page">
+      <div className="wrap">
+        <PageTitle
+          index="04"
+          kicker="Repair bench"
+          title={<>Take it apart carefully.<br /><em>Put it back better.</em></>}
+          intro="I like old consoles, odd failures, worn controllers, forgotten computers, and anything that makes me ask: what is actually wrong with this thing?"
+        />
+        <div className="bench-manifesto">
+          <p>I do not believe every device needs to be replaced the moment it acts up. Sometimes it needs cleaning. Sometimes a cable, screen, drive, shell, or software install. Sometimes it is truly done. The first job is finding out which one.</p>
+          <div><span>My rule</span>Diagnose first. Buy parts second.</div>
+        </div>
+        <div className="photo-grid">
+          {gallery.map((image, index) => (
+            <button type="button" key={image.src} className={`photo photo-${(index % 7) + 1}`} onClick={() => openImage(image)}>
+              <img src={image.src} alt={image.alt} loading={index > 2 ? 'lazy' : 'eager'} />
+              <span><b>{String(index + 1).padStart(2, '0')}</b>{image.label}<ImageIcon size={14} /></span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function Footer() {
+  return (
+    <footer className="site-footer">
+      <div className="wrap footer-main">
+        <div><p className="kicker">Need a tech generalist?</p><h2>Tell me what you are trying to solve.</h2></div>
+        <div><a className="footer-email" href="mailto:personaltechwiz@gmail.com">personaltechwiz@gmail.com <ArrowUpRight size={22} /></a><p>IT support · servers · AI · web tools · repair</p></div>
+      </div>
+      <div className="wrap footer-bottom"><Brand /><span>© {new Date().getFullYear()} Jeffrey Yampol · Built with React</span></div>
+    </footer>
+  )
+}
+
+function Lightbox({ image, onClose }) {
+  useEffect(() => {
+    if (!image) return undefined
+    const escape = (event) => event.key === 'Escape' && onClose()
+    document.addEventListener('keydown', escape)
+    document.body.classList.add('modal-open')
+    return () => {
+      document.removeEventListener('keydown', escape)
+      document.body.classList.remove('modal-open')
+    }
+  }, [image, onClose])
+  if (!image) return null
+  return (
+    <div className="lightbox" role="dialog" aria-modal="true" aria-label={image.label} onMouseDown={(event) => event.currentTarget === event.target && onClose()}>
+      <button type="button" onClick={onClose} aria-label="Close image"><X size={22} /></button>
+      <figure><img src={image.src} alt={image.alt} /><figcaption>{image.label}</figcaption></figure>
     </div>
   )
 }
 
 function App() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('about')
+  const route = useRoute()
   const [lightbox, setLightbox] = useState(null)
-
-  useEffect(() => {
-    const sections = navItems
-      .map(([, id]) => document.getElementById(id))
-      .filter(Boolean)
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-        if (visible) setActiveSection(visible.target.id)
-      },
-      { rootMargin: '-20% 0px -65%', threshold: [0.05, 0.25, 0.5] },
-    )
-    sections.forEach((section) => observer.observe(section))
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    if (!lightbox) return undefined
-    const closeOnEscape = (event) => event.key === 'Escape' && setLightbox(null)
-    document.addEventListener('keydown', closeOnEscape)
-    document.body.classList.add('modal-open')
-    return () => {
-      document.removeEventListener('keydown', closeOnEscape)
-      document.body.classList.remove('modal-open')
-    }
-  }, [lightbox])
-
-  const closeMenu = () => setMenuOpen(false)
+  const page = useMemo(() => {
+    if (route === 'work') return <WorkPage />
+    if (route === 'resume') return <ResumePage />
+    if (route === 'services') return <ServicesPage />
+    if (route === 'bench') return <BenchPage openImage={setLightbox} />
+    return <HomePage />
+  }, [route])
 
   return (
     <>
-      <a className="skip-link" href="#main">Skip to main content</a>
-      <header className="site-header">
-        <div className="nav-shell">
-          <Logo />
-          <nav className={`nav-links ${menuOpen ? 'nav-links--open' : ''}`} aria-label="Primary navigation">
-            {navItems.map(([label, id]) => (
-              <a
-                key={id}
-                className={activeSection === id ? 'active' : ''}
-                href={`#${id}`}
-                onClick={closeMenu}
-              >
-                {label}
-              </a>
-            ))}
-            <a className="nav-contact" href="#contact" onClick={closeMenu}>Let&apos;s connect <ArrowRight size={14} /></a>
-          </nav>
-          <button
-            className="menu-toggle"
-            type="button"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((current) => !current)}
-          >
-            {menuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </div>
-      </header>
-
-      <main id="main">
-        <section className="hero" id="top">
-          <div className="hero-glow hero-glow--one" />
-          <div className="hero-glow hero-glow--two" />
-          <div className="container hero-grid">
-            <div className="hero-copy">
-              <div className="availability"><span /> Open to IT, systems & AI opportunities</div>
-              <p className="eyebrow">IT systems · AI automation · homelab engineering</p>
-              <h1>I build useful systems from <em>hardware to AI.</em></h1>
-              <p className="hero-lead">
-                I&apos;m <strong>Jeffrey Yampol</strong>—a hands-on technology problem solver combining IT support,
-                Linux infrastructure, self-hosted services, AI agents, web tools, and electronics repair.
-              </p>
-              <div className="hero-actions">
-                <a className="button button--primary" href="#projects">Explore my work <ArrowDown size={17} /></a>
-                <a className="button button--secondary" href="#experience">View experience</a>
-              </div>
-              <div className="hero-meta">
-                <span><Map size={15} /> Hollywood, Florida</span>
-                <span><CircleCheck size={15} /> Customer-focused</span>
-                <span><ShieldCheck size={15} /> Reliability-minded</span>
-              </div>
-            </div>
-
-            <div className="hero-visual" aria-label="Technical focus areas">
-              <div className="terminal-card">
-                <div className="terminal-bar">
-                  <div><i /><i /><i /></div>
-                  <span>jeffrey@personaltechwiz</span>
-                  <TerminalSquare size={15} />
-                </div>
-                <div className="terminal-body">
-                  <p><span className="prompt">$</span> profile --summary</p>
-                  <div className="terminal-output">
-                    <span>ROLE</span><strong>Systems builder & problem solver</strong>
-                    <span>FOCUS</span><strong>Infrastructure, AI, support, repair</strong>
-                    <span>MODE</span><strong className="online">Hands-on · always learning</strong>
-                  </div>
-                  <p><span className="prompt">$</span> stack --active</p>
-                  <div className="stack-cloud">
-                    {['Linux', 'Docker', 'React', 'Tailscale', 'Cloudflare', 'Hermes AI', 'Python', 'Git'].map((item) => <span key={item}>{item}</span>)}
-                  </div>
-                  <p className="cursor-line"><span className="prompt">$</span><i /></p>
-                </div>
-              </div>
-              <div className="orbit-badge orbit-badge--server"><Server size={20} /><span>Self-hosted</span></div>
-              <div className="orbit-badge orbit-badge--ai"><Sparkles size={20} /><span>AI-assisted</span></div>
-            </div>
-          </div>
-          <div className="proof-strip">
-            <div className="container proof-grid">
-              <div><strong>Linux-first</strong><span>Infrastructure</span></div>
-              <div><strong>Self-hosted</strong><span>Services</span></div>
-              <div><strong>Automation-led</strong><span>Operations</span></div>
-              <div><strong>People-focused</strong><span>Support</span></div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section section--about" id="about">
-          <div className="container about-grid">
-            <SectionIntro
-              eyebrow="About me"
-              title={<>Curiosity turned into a <span className="gradient-text">working lab.</span></>}
-            />
-            <div className="about-copy">
-              <p className="about-lead">
-                Technology is both my profession and my workshop. I learn by building systems, fixing what breaks,
-                documenting the result, and making the next version easier to operate.
-              </p>
-              <div className="about-columns">
-                <p>
-                  My professional background blends IT systems management and technical support with customer service,
-                  retail operations, team training, and public speaking. That combination helps me translate a technical
-                  problem into a clear, practical solution for the person who actually needs it.
-                </p>
-                <p>
-                  Outside of work, I run a growing homelab, connect AI agents to real workflows, build dashboards and
-                  service portals, host media and game platforms, and restore older electronics. I care about reliable
-                  systems, responsible reuse, and technology that feels approachable instead of intimidating.
-                </p>
-              </div>
-              <div className="values-row">
-                {[
-                  [Wrench, 'Learn by doing'],
-                  [ShieldCheck, 'Build for reliability'],
-                  [Headphones, 'Listen before solving'],
-                  [Boxes, 'Reuse before replacing'],
-                ].map(([Icon, text]) => <span key={text}><Icon size={17} /> {text}</span>)}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section section--capabilities" id="capabilities">
-          <div className="container">
-            <SectionIntro
-              eyebrow="Capability map"
-              title="One skill set. Multiple layers of technology."
-              description="I work across the stack—from the device in someone’s hands to the network, server, application, and automation behind it."
-            />
-            <div className="capability-grid">
-              {capabilities.map(({ icon: Icon, label, title, description, skills }) => (
-                <article className="capability-card" key={title}>
-                  <div className="capability-top">
-                    <span className="icon-box"><Icon size={21} /></span>
-                    <span className="mono-label">{label}</span>
-                  </div>
-                  <h3>{title}</h3>
-                  <p>{description}</p>
-                  <ul>
-                    {skills.map((skill) => <li key={skill}><ChevronRight size={13} />{skill}</li>)}
-                  </ul>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section section--projects" id="projects">
-          <div className="container">
-            <div className="split-heading">
-              <SectionIntro
-                eyebrow="Selected systems"
-                title="Built to solve real problems."
-              />
-              <p>These projects connect infrastructure, automation, user experience, and ongoing operations—not just one-time setup.</p>
-            </div>
-            <div className="project-list">
-              {projects.map(({ number, icon: Icon, eyebrow, title, summary, details, accent }) => (
-                <article className={`project-card project-card--${accent}`} key={title}>
-                  <div className="project-number">{number}</div>
-                  <div className="project-icon"><Icon size={27} /></div>
-                  <div className="project-copy">
-                    <p className="mono-label">{eyebrow}</p>
-                    <h3>{title}</h3>
-                    <p>{summary}</p>
-                  </div>
-                  <ul className="project-details">
-                    {details.map((detail) => <li key={detail}><CircleCheck size={15} />{detail}</li>)}
-                  </ul>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section section--experience" id="experience">
-          <div className="container resume-layout">
-            <div className="resume-sidebar">
-              <SectionIntro
-                eyebrow="Résumé"
-                title="Experience built around people and systems."
-                description="A customer-service foundation strengthened by hands-on responsibility for technology, operations, and troubleshooting."
-                narrow
-              />
-              <div className="education-card">
-                <GraduationCap size={22} />
-                <div>
-                  <span className="mono-label">Education</span>
-                  <strong>High School Diploma</strong>
-                  <p>Yeshivat Kadimah High School · 2018–2021</p>
-                  <p>Ida Crown Jewish Academy · 2017–2018</p>
-                </div>
-              </div>
-              <a className="inline-link" href="https://www.linkedin.com/in/jeffrey-yampol-42756b187" target="_blank" rel="noreferrer">
-                Full profile on LinkedIn <ExternalLink size={15} />
-              </a>
-            </div>
-            <div className="timeline">
-              {experience.map((job) => (
-                <article className="timeline-item" key={`${job.role}-${job.range}`}>
-                  <div className="timeline-marker"><BriefcaseBusiness size={15} /></div>
-                  <div className="timeline-content">
-                    <p className="timeline-range">{job.range}</p>
-                    <h3>{job.role}</h3>
-                    <div className="timeline-company"><strong>{job.company}</strong><span>{job.location}</span></div>
-                    <p>{job.body}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section section--portal" id="portal">
-          <div className="container">
-            <div className="portal-heading">
-              <SectionIntro
-                eyebrow="Service portal"
-                title="The public side of the homelab."
-                description="A future launchpad for community, media, gaming, and library services. Links stay private until each service is ready for public access."
-              />
-              <div className="private-notice"><ShieldCheck size={18} /><span><strong>Safe by default</strong> Placeholder access only—no private endpoints are exposed.</span></div>
-            </div>
-            <div className="service-grid">
-              {serviceCards.map(({ icon: Icon, name, type, status, tone }) => (
-                <article className={`service-card service-card--${tone}`} key={name}>
-                  <div className="service-icon"><Icon size={24} /></div>
-                  <div className="service-copy">
-                    <span>{type}</span>
-                    <h3>{name}</h3>
-                  </div>
-                  <div className="service-status"><span />{status}</div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section section--bench" id="bench">
-          <div className="container">
-            <div className="split-heading bench-heading">
-              <SectionIntro
-                eyebrow="Repair & modification bench"
-                title="Old tech still has life left."
-              />
-              <p>I diagnose carefully, repair what makes sense, customize when it improves the device, and keep useful hardware out of the junk pile.</p>
-            </div>
-            <div className="repair-grid">
-              {repairServices.map(([title, body], index) => (
-                <article key={title}>
-                  <span className="repair-number">0{index + 1}</span>
-                  <h3>{title}</h3>
-                  <p>{body}</p>
-                </article>
-              ))}
-            </div>
-            <div className="gallery-heading">
-              <div><p className="eyebrow">From the bench</p><h3>Real repair and mod work.</h3></div>
-              <p>Select a photo to view it larger.</p>
-            </div>
-            <div className="gallery-grid">
-              {gallery.map((image, index) => (
-                <button className={`gallery-item gallery-item--${(index % 5) + 1}`} type="button" key={image.src} onClick={() => setLightbox(image)}>
-                  <img src={image.src} alt={image.alt} loading="lazy" />
-                  <span><ImageIcon size={15} />{image.label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section section--contact" id="contact">
-          <div className="contact-glow" />
-          <div className="container contact-card">
-            <div>
-              <p className="eyebrow">Let&apos;s connect</p>
-              <h2>Need someone who can see the <span className="gradient-text">whole system?</span></h2>
-            </div>
-            <div className="contact-copy">
-              <p>
-                I&apos;m interested in IT support, systems administration, homelab, infrastructure, technical operations,
-                AI automation, and adjacent opportunities where hands-on problem solving matters.
-              </p>
-              <div className="contact-actions">
-                <a className="button button--primary" href="mailto:personaltechwiz@gmail.com"><Mail size={17} /> Email me</a>
-                <a className="button button--secondary" href="https://www.linkedin.com/in/jeffrey-yampol-42756b187" target="_blank" rel="noreferrer"><Linkedin size={17} /> LinkedIn</a>
-              </div>
-              <span className="contact-email">personaltechwiz@gmail.com</span>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer className="site-footer">
-        <div className="container footer-grid">
-          <Logo />
-          <p>IT systems, AI automation, homelab engineering, technical support, and electronics repair.</p>
-          <div className="footer-links">
-            <a href="mailto:personaltechwiz@gmail.com" aria-label="Email Jeffrey"><Mail size={18} /></a>
-            <a href="https://www.linkedin.com/in/jeffrey-yampol-42756b187" target="_blank" rel="noreferrer" aria-label="Jeffrey on LinkedIn"><Linkedin size={18} /></a>
-            <a href="#top" aria-label="Back to top"><ArrowDown className="arrow-up" size={18} /></a>
-          </div>
-        </div>
-        <div className="container footer-bottom"><span>© {new Date().getFullYear()} Jeffrey Yampol</span><span>Built with React · Hosted on GitHub Pages</span></div>
-      </footer>
-
-      {lightbox && (
-        <div className="lightbox" role="dialog" aria-modal="true" aria-label={lightbox.label} onMouseDown={(event) => event.target === event.currentTarget && setLightbox(null)}>
-          <button type="button" className="lightbox-close" onClick={() => setLightbox(null)} aria-label="Close image"><X size={22} /></button>
-          <figure>
-            <img src={lightbox.src} alt={lightbox.alt} />
-            <figcaption>{lightbox.label}</figcaption>
-          </figure>
-        </div>
-      )}
+      <a className="skip-link" href="#page-content">Skip to content</a>
+      <Header route={route} />
+      <div id="page-content">{page}</div>
+      <Footer />
+      <Lightbox image={lightbox} onClose={() => setLightbox(null)} />
     </>
   )
 }
