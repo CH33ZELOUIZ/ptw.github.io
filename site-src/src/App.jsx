@@ -22,8 +22,8 @@ import {
 
 const routes = [
   { key: 'home', label: 'Home', href: '#/' },
-  { key: 'work', label: 'Work', href: '#/work' },
-  { key: 'resume', label: 'Résumé', href: '#/resume' },
+  { key: 'skills', label: 'Skills', href: '#/skills' },
+  { key: 'resume', label: 'Resume', href: '#/resume' },
   { key: 'services', label: 'Services', href: '#/services' },
   { key: 'bench', label: 'Repair bench', href: '#/bench' },
 ]
@@ -31,50 +31,50 @@ const routes = [
 const systems = [
   {
     number: '01',
-    short: 'Homelab',
-    title: 'A homelab that has to work, not just look good in a rack.',
-    problem: 'I wanted one place for media, photos, game servers, automation, backups, and the tools I use every day. That meant learning how to keep a lot of moving parts from stepping on each other.',
-    work: 'I run Linux hosts, Docker Compose stacks, storage pools, private networking, remote access, DNS, tunnels, firewalls, monitoring, and recovery jobs. I also move workloads between machines when the hardware or the job calls for it.',
-    tools: ['Linux', 'Docker Compose', 'Tailscale', 'Cloudflare', 'nftables', 'SMB', 'Backups'],
+    short: 'IT support',
+    title: 'Computers, phones, accounts, Wi‑Fi, and everyday tech problems.',
+    problem: 'The regular problems people run into: slow devices, confusing apps, account issues, printers, updates, backups, cleanup, and setup.',
+    work: 'I troubleshoot the device, the software, the account, and the network instead of blaming the first thing I see. I explain what happened and what to do next.',
+    tools: ['Windows', 'macOS', 'iOS', 'Android', 'Networking', 'Accounts', 'Backups'],
   },
   {
     number: '02',
-    short: 'AI systems',
-    title: 'AI that can do useful work instead of sitting in a chat box.',
-    problem: 'I wanted assistants that could help with real server work, answer people where they already talk, keep an eye on recurring jobs, and hand specialized problems to the right model or agent.',
-    work: 'I operate Hermes agents through Discord and iMessage, build role-specific gateways, schedule checks, connect tools, route between model providers, and keep permissions separated. The goal is practical help without giving an agent more access than it needs.',
-    tools: ['Hermes Agent', 'Discord', 'iMessage', 'Python', 'Model routing', 'Scheduled jobs', 'Webhooks'],
+    short: 'Operating systems',
+    title: 'Help across Windows, macOS, Linux, iPhone, Android, and odd setups.',
+    problem: 'Not every job lives on one platform. Families, small teams, and personal setups usually have a mix of devices that all need to work together.',
+    work: 'I move between operating systems, transfer data, clean up problems, install software, fix settings, recover access, and learn unfamiliar systems when the job calls for it.',
+    tools: ['Linux', 'Windows', 'macOS', 'iOS', 'Android', 'Data transfer', 'Recovery'],
   },
   {
     number: '03',
-    short: 'Command Center',
-    title: 'One screen for the parts of my setup I actually need to see.',
-    problem: 'Bookmarks and terminal history stop being enough when services live on several machines. I needed a dashboard built around my setup, not a generic monitoring template.',
-    work: 'I built the CH33ZE Command Center to organize service health, admin links, accounts, files, host information, and routine controls. I keep refining it as the homelab changes.',
-    tools: ['React', 'JavaScript', 'APIs', 'Linux', 'Responsive UI', 'Service health'],
+    short: 'Servers & homelab',
+    title: 'Linux servers, self-hosted apps, storage, backups, and remote access.',
+    problem: 'I run real services for media, photos, game servers, automation, files, dashboards, and everyday tools. They need to stay organized and recoverable.',
+    work: 'I handle Docker Compose stacks, storage paths, DNS, tunnels, private networking, firewalls, monitoring, updates, moves between machines, and backup/recovery checks.',
+    tools: ['Linux', 'Docker Compose', 'Tailscale', 'Cloudflare', 'nftables', 'SMB', 'Backups'],
   },
   {
     number: '04',
-    short: 'Personal cloud',
-    title: 'Media and libraries that I control.',
-    problem: 'Movies, music, comics, photos, and game collections all have different storage and metadata problems. I wanted them easy to use without handing the whole library to someone else’s cloud.',
-    work: 'I manage Jellyfin, Navidrome, Komga, RomM, Immich, acquisition tools, storage mounts, transcode limits, library cleanup, and the networking around them. I troubleshoot the ugly parts too: imports, permissions, paths, full disks, and bad metadata.',
-    tools: ['Jellyfin', 'Navidrome', 'Komga', 'RomM', 'Immich', 'Storage', 'Automation'],
+    short: 'Websites & tools',
+    title: 'Websites, dashboards, scripts, and little tools that solve real problems.',
+    problem: 'Sometimes the missing piece is not a big app. It is a cleaner homepage, a dashboard, a status page, a script, or a workflow that saves repeated manual work.',
+    work: 'I build React pages, small utilities, service dashboards, automation scripts, API integrations, and practical admin tools that can improve over time.',
+    tools: ['React', 'JavaScript', 'Python', 'Shell', 'APIs', 'GitHub', 'Responsive UI'],
   },
   {
     number: '05',
-    short: 'Game services',
-    title: 'A Minecraft setup that players can use without me babysitting it.',
-    problem: 'Running the game is the easy part. The rest is updates, player access, maps, dashboards, permissions, backups, and making sure an admin shortcut cannot wreck the server.',
-    work: 'I manage the server, web map, player-facing dashboard, cross-platform access, service-only restarts, role-aware automation, and audit-friendly controls.',
-    tools: ['Minecraft', 'Bedrock access', 'Live map', 'Dashboards', 'Discord', 'Backups'],
+    short: 'AI & automation',
+    title: 'AI agents and automations that do useful work, not just chat.',
+    problem: 'I use AI for hands-on help: server checks, Discord/iMessage workflows, scheduled jobs, research, and passing specialized problems to the right tools.',
+    work: 'I operate Hermes agents, connect tools, schedule checks, route model providers, keep permissions separated, and test whether an automation actually did the job.',
+    tools: ['Hermes Agent', 'Discord', 'iMessage', 'Python', 'Model routing', 'Scheduled jobs', 'Webhooks'],
   },
   {
     number: '06',
     short: 'Repair bench',
-    title: 'Broken hardware is usually a question, not a dead end.',
-    problem: 'I hate throwing away a device before anyone has properly looked at it. Consoles, controllers, old computers, handhelds, and phones often have more life left than people think.',
-    work: 'I diagnose, clean, disassemble, replace parts, swap shells, prepare storage, recover software, test the result, and decide honestly when a repair is not worth the risk or cost.',
+    title: 'Consoles, controllers, older devices, cleaning, parts, and testing.',
+    problem: 'I like giving hardware a fair chance before it gets thrown away. A lot of devices need diagnosis, cleaning, parts, software recovery, or an honest “not worth it” call.',
+    work: 'I disassemble carefully, inspect, clean, swap parts, prepare storage, recover software when possible, test the result, and explain the risk before parts get ordered.',
     tools: ['Consoles', 'Controllers', 'Handhelds', 'PCs & Macs', 'Phones', 'Software recovery'],
   },
 ]
@@ -150,6 +150,7 @@ const gallery = Array.from({ length: 12 }, (_, index) => ({
 
 function currentRoute() {
   const value = window.location.hash.replace(/^#\/?/, '').split('/')[0]
+  if (value === 'work') return 'skills'
   return routes.some((route) => route.key === value) ? value : 'home'
 }
 
@@ -190,7 +191,7 @@ function Header({ route }) {
           {routes.map((item) => (
             <a key={item.key} href={item.href} className={route === item.key ? 'active' : ''}>{item.label}</a>
           ))}
-          <a className="nav-email" href="mailto:personaltechwiz@gmail.com">Email me <ArrowUpRight size={14} /></a>
+          <a className="nav-email" href="mailto:jeffrey@personaltechwiz.com">Email me <ArrowUpRight size={14} /></a>
         </nav>
         <button className="menu-button" type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label={open ? 'Close menu' : 'Open menu'}>
           {open ? <X size={21} /> : <Menu size={21} />}
@@ -223,19 +224,19 @@ function HomePage() {
       <section className="home-hero">
         <div className="wrap hero-layout">
           <div className="hero-copy">
-            <p className="kicker">Your Personal Tech Wiz · one-man tech help</p>
+            <p className="kicker">Friendly tech help · Your Personal Tech Wiz</p>
             <h1>Your Personal<br /><em>Tech Wiz.</em></h1>
             <p className="hero-intro">
-              I&apos;m Jeffrey. I&apos;m the guy people call when a computer, server, website, console, phone,
-              network, or random device needs somebody patient to figure it out.
+              Hi, I&apos;m Jeffrey. I help with computers, phones, consoles, websites, servers, networks,
+              and the random tech problems that do not fit neatly in one box.
             </p>
             <p className="hero-note">
-              Personal Tech Wiz means I work across operating systems, devices, servers, AI tools, web projects,
-              and repair bench jobs. If I do not know the answer yet, I learn it, test it, and keep going.
+              Personal Tech Wiz is simple: tell me what is acting up, what you want working, or what you want built.
+              I will look at it, explain it clearly, and keep learning until there is a real answer.
             </p>
             <div className="hero-actions">
-              <RouteLink to="work" className="button">See what I work on</RouteLink>
-              <RouteLink to="resume" className="quiet-link">Read my résumé</RouteLink>
+              <RouteLink to="skills" className="button">See my skills</RouteLink>
+              <RouteLink to="resume" className="quiet-link">Read my resume</RouteLink>
               <RouteLink to="services" className="quiet-link">Hosted services</RouteLink>
             </div>
           </div>
@@ -255,17 +256,16 @@ function HomePage() {
         <div className="wrap personal-grid">
           <div className="side-note">Why Personal Tech Wiz?</div>
           <div className="personal-copy">
-            <h2>One guy who likes figuring tech out.</h2>
+            <h2>Tech help from one person who cares enough to figure it out.</h2>
             <p className="large-copy">
-              Some people stay in one lane. I like seeing how the lanes connect. A slow app might really be a disk problem.
-              A broken stream might be DNS, a container path, or a bad client. A controller repair can turn into a software
-              recovery job. Knowing a little about the whole chain helps me find the real problem.
+              Most tech problems are connected. A slow computer might be a storage issue. A broken stream might be DNS,
+              a bad app setting, or a network problem. A controller repair can turn into a software recovery job.
+              I like chasing the real cause instead of guessing.
             </p>
             <p>
-              I am comfortable moving between Linux, Windows, macOS, iOS, Android, and unfamiliar systems when the job
-              calls for it. The same goes for devices: servers, PCs, Macs, phones, tablets, networking gear, consoles,
-              handhelds, controllers, storage, and smart-home equipment. I do not pretend to know every answer. I know
-              how to research, test, and keep going until I understand what is happening.
+              I move between Linux, Windows, macOS, iOS, Android, servers, PCs, Macs, phones, tablets, consoles,
+              handhelds, controllers, storage, networking gear, and smart-home devices. I do not pretend to know every
+              answer on day one. I know how to learn fast, test safely, and explain what I find.
             </p>
           </div>
         </div>
@@ -275,8 +275,8 @@ function HomePage() {
         <div className="wrap field-notes-grid">
           <div className="field-notes-heading">
             <p className="kicker">How I work</p>
-            <h2>No buzzwords.<br /><em>Just figure-it-out work.</em></h2>
-            <p>Employers get somebody who can talk to the person having the problem, trace the system, open the device, read the logs, and stay with it until the answer is real.</p>
+            <h2>Friendly help.<br /><em>Real follow-through.</em></h2>
+            <p>You get somebody who can listen first, explain without talking down, open the device or logs when needed, and stay with the problem until the answer is real.</p>
           </div>
           <div className="note-board">
             {fieldNotes.map(([title, body], index) => (
@@ -293,24 +293,24 @@ function HomePage() {
       <section className="dark-section what-i-do">
         <div className="wrap">
           <div className="section-heading">
-            <p className="kicker">What I actually do</p>
-            <h2>Fix it. Run it.<br />Make it easier to use.</h2>
+            <p className="kicker">How I can help</p>
+            <h2>Fix problems.<br />Set things up.<br />Make tech easier.</h2>
           </div>
           <div className="practice-list">
             <article>
               <span>01</span>
-              <h3>Keep technology running</h3>
-              <p>Support, updates, networks, operating systems, backups, storage, accounts, and the small issues that become big issues when nobody owns them.</p>
+              <h3>Day-to-day tech help</h3>
+              <p>Computers, phones, accounts, updates, Wi‑Fi, printers, storage, backups, cleanup, and the little issues that turn into big ones when nobody owns them.</p>
             </article>
             <article>
               <span>02</span>
-              <h3>Build the missing piece</h3>
-              <p>If the right dashboard, script, integration, or workflow does not exist, I will make a practical version and improve it while I use it.</p>
+              <h3>Websites, dashboards, and automations</h3>
+              <p>I build practical tools when a spreadsheet, bookmark folder, or repeated manual step is getting in the way.</p>
             </article>
             <article>
               <span>03</span>
-              <h3>Work on the physical thing</h3>
-              <p>I am just as happy with a screwdriver and a multimeter as I am in a terminal. Repair work keeps me patient and honest about what the hardware can do.</p>
+              <h3>Repair bench work</h3>
+              <p>Consoles, controllers, older devices, parts swaps, cleaning, testing, and honest calls about whether something is worth repairing.</p>
             </article>
           </div>
         </div>
@@ -319,13 +319,13 @@ function HomePage() {
       <section className="paper-section selected-work">
         <div className="wrap selected-grid">
           <div>
-            <p className="kicker">A few ongoing projects</p>
-            <h2>Things I built because I needed them.</h2>
-            <RouteLink to="work">See all project notes</RouteLink>
+            <p className="kicker">Skills in real life</p>
+            <h2>Here are the areas I work in most.</h2>
+            <RouteLink to="skills">See the full skills page</RouteLink>
           </div>
           <div className="work-index">
             {systems.slice(0, 4).map((system) => (
-              <a href="#/work" key={system.number}>
+              <a href="#/skills" key={system.number}>
                 <span>{system.number}</span>
                 <strong>{system.short}</strong>
                 <p>{system.title}</p>
@@ -351,15 +351,15 @@ function HomePage() {
   )
 }
 
-function WorkPage() {
+function SkillsPage() {
   return (
     <main className="page-shell">
       <div className="wrap">
         <PageTitle
           index="01"
-          kicker="Work and projects"
-          title={<>Projects I actually use<br />and keep <em>running.</em></>}
-          intro="This is the bigger technical side of Personal Tech Wiz: homelab services, AI tools, dashboards, media systems, game servers, and repair work. Most of it started because I needed it or someone around me did."
+          kicker="Skills and examples"
+          title={<>Skills, tools,<br />and real <em>examples.</em></>}
+          intro="A cleaner look at what I can help with: everyday IT support, operating systems, servers, websites, AI tools, hosted services, game servers, and repair bench work."
         />
         <div className="case-list">
           {systems.map((system) => (
@@ -368,8 +368,8 @@ function WorkPage() {
               <div className="case-main">
                 <h2>{system.title}</h2>
                 <div className="case-copy">
-                  <div><h3>Why it exists</h3><p>{system.problem}</p></div>
-                  <div><h3>What I handle</h3><p>{system.work}</p></div>
+                  <div><h3>Skill area</h3><p>{system.problem}</p></div>
+                  <div><h3>Examples</h3><p>{system.work}</p></div>
                 </div>
                 <div className="tool-line">{system.tools.map((tool) => <span key={tool}>{tool}</span>)}</div>
               </div>
@@ -409,7 +409,7 @@ function ResumePage() {
       <div className="wrap">
         <PageTitle
           index="02"
-          kicker="Résumé"
+          kicker="Resume"
           title={<>Resume, skills,<br />and real <em>experience.</em></>}
           intro="I am your Personal Tech Wiz: customer support, IT help, server work, AI tools, repair work, and the patience to learn whatever the job needs next."
         />
@@ -417,12 +417,12 @@ function ResumePage() {
           <div className="resume-contact">
             <p>Jeffrey Yampol</p>
             <span>Hollywood, Florida</span>
-            <a href="mailto:personaltechwiz@gmail.com">personaltechwiz@gmail.com</a>
+            <a href="mailto:jeffrey@personaltechwiz.com">jeffrey@personaltechwiz.com</a>
             <a href="https://www.linkedin.com/in/jeffrey-yampol-42756b187" target="_blank" rel="noreferrer">LinkedIn <ExternalLink size={13} /></a>
           </div>
           <div>
             <h2>Professional summary</h2>
-            <p>I am a customer-focused technology generalist with hands-on experience in IT support, electronics troubleshooting, networking, system maintenance, Linux servers, self-hosted services, and AI automation. I solve problems patiently, explain them plainly, and learn unfamiliar systems quickly.</p>
+            <p>I am a customer-focused Personal Tech Wiz with hands-on experience in IT support, electronics troubleshooting, networking, system maintenance, Linux servers, self-hosted services, and AI automation. I solve problems patiently, explain them plainly, and learn unfamiliar systems quickly.</p>
           </div>
         </section>
         <section className="resume-highlights" aria-label="Technical resume highlights">
@@ -497,7 +497,7 @@ function ServicesPage() {
             <p className="kicker">Personal Tech Wiz repair</p>
             <h2>Have something broken or a mod in mind?</h2>
             <p>Send the model, what happened, what you want done, and a few clear photos. I will tell you whether it is a job I can take on and what I need to check first.</p>
-            <a className="button light-button" href="mailto:personaltechwiz@gmail.com">Start with an email <Mail size={16} /></a>
+            <a className="button light-button" href="mailto:jeffrey@personaltechwiz.com">Start with an email <Mail size={16} /></a>
           </div>
           <ul>
             <li><Wrench size={19} /><span><strong>Consoles and handhelds</strong>Diagnosis, cleaning, screens, shells, buttons, storage, software, and general restoration.</span></li>
@@ -543,7 +543,7 @@ function Footer() {
     <footer className="site-footer">
       <div className="wrap footer-main">
         <div><p className="kicker">Your Personal Tech Wiz</p><h2>Got a tech problem or a job opening?</h2></div>
-        <div><a className="footer-email" href="mailto:personaltechwiz@gmail.com">personaltechwiz@gmail.com <ArrowUpRight size={22} /></a><p>Computers · servers · AI · websites · consoles · repairs</p></div>
+        <div><a className="footer-email" href="mailto:jeffrey@personaltechwiz.com">jeffrey@personaltechwiz.com <ArrowUpRight size={22} /></a><p>Computers · servers · AI · websites · consoles · repairs</p></div>
       </div>
       <div className="wrap footer-bottom"><Brand /><span>© {new Date().getFullYear()} Jeffrey Yampol</span></div>
     </footer>
@@ -574,7 +574,7 @@ function App() {
   const route = useRoute()
   const [lightbox, setLightbox] = useState(null)
   const page = useMemo(() => {
-    if (route === 'work') return <WorkPage />
+    if (route === 'skills') return <SkillsPage />
     if (route === 'resume') return <ResumePage />
     if (route === 'services') return <ServicesPage />
     if (route === 'bench') return <BenchPage openImage={setLightbox} />

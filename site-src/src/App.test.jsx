@@ -17,24 +17,32 @@ describe('Personal Tech Wiz portfolio', () => {
   it('opens with Jeffrey’s Personal Tech Wiz positioning', () => {
     render(<App />)
     expect(screen.getByRole('heading', { name: /your personal.*tech wiz/i })).toBeInTheDocument()
-    expect(screen.getByText(/one-man tech help/i)).toBeInTheDocument()
-    expect(screen.getByText(/learn it, test it/i)).toBeInTheDocument()
-    expect(screen.getByText(/one guy who likes figuring tech out/i)).toBeInTheDocument()
+    expect(screen.getByText(/friendly tech help/i)).toBeInTheDocument()
+    expect(screen.getByText(/tell me what is acting up/i)).toBeInTheDocument()
+    expect(screen.getByText(/cares enough to figure it out/i)).toBeInTheDocument()
     expect(screen.getAllByText(/linux, windows, macos, ios, android/i).length).toBeGreaterThan(0)
   })
 
-  it('organizes detailed projects on a separate Work view', () => {
+  it('organizes skills on a separate Skills view', () => {
+    render(<App />)
+    go('#/skills')
+    expect(screen.getByRole('heading', { name: /skills, tools.*real examples/i })).toBeInTheDocument()
+    expect(screen.getByText(/computers, phones, accounts/i)).toBeInTheDocument()
+    expect(screen.getByText(/linux servers, self-hosted apps/i)).toBeInTheDocument()
+    expect(screen.getByText(/i am not tied to one stack/i)).toBeInTheDocument()
+  })
+
+  it('keeps the old Work hash as a Skills alias', () => {
     render(<App />)
     go('#/work')
-    expect(screen.getByRole('heading', { name: /projects i actually use.*keep running/i })).toBeInTheDocument()
-    expect(screen.getByText('A homelab that has to work, not just look good in a rack.')).toBeInTheDocument()
-    expect(screen.getByText(/ai that can do useful work/i)).toBeInTheDocument()
-    expect(screen.getByText(/i am not tied to one stack/i)).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /skills, tools.*real examples/i })).toBeInTheDocument()
   })
 
   it('keeps resume information in a focused resume view', () => {
     render(<App />)
     go('#/resume')
+    expect(screen.getByRole('heading', { name: /resume, skills/i })).toBeInTheDocument()
+    expect(screen.queryByText(/résumé/i)).not.toBeInTheDocument()
     expect(screen.getByText('IT Consultant / IT Systems Manager')).toBeInTheDocument()
     expect(screen.getByText('Renew Range Holdings · CareFree Living Center')).toBeInTheDocument()
     expect(screen.getByText('Assistant Store Manager')).toBeInTheDocument()
