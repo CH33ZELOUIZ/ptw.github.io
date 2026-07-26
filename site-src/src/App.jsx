@@ -223,15 +223,15 @@ function HomePage() {
       <section className="home-hero">
         <div className="wrap hero-layout">
           <div className="hero-copy">
-            <p className="kicker">Your Personal Tech Wiz · Hollywood, Florida</p>
-            <h1>Your Personal Tech Wiz.</h1>
+            <p className="kicker">Your Personal Tech Wiz · one-man tech help</p>
+            <h1>Your Personal<br /><em>Tech Wiz.</em></h1>
             <p className="hero-intro">
-              I&apos;m Jeffrey. I&apos;m the one-man tech guy people call when a computer, server, website,
-              console, phone, network, or random device needs help.
+              I&apos;m Jeffrey. I&apos;m the guy people call when a computer, server, website, console, phone,
+              network, or random device needs somebody patient to figure it out.
             </p>
             <p className="hero-note">
-              I work across operating systems, hardware, homelab services, AI tools, and repairs. If I do not
-              know something yet, I learn it fast, test it safely, and keep going until it makes sense.
+              Personal Tech Wiz means I work across operating systems, devices, servers, AI tools, web projects,
+              and repair bench jobs. If I do not know the answer yet, I learn it, test it, and keep going.
             </p>
             <div className="hero-actions">
               <RouteLink to="work" className="button">See what I work on</RouteLink>
@@ -253,9 +253,9 @@ function HomePage() {
 
       <section className="paper-section">
         <div className="wrap personal-grid">
-          <div className="side-note">What that means</div>
+          <div className="side-note">Why Personal Tech Wiz?</div>
           <div className="personal-copy">
-            <h2>One guy for a lot of tech problems.</h2>
+            <h2>One guy who likes figuring tech out.</h2>
             <p className="large-copy">
               Some people stay in one lane. I like seeing how the lanes connect. A slow app might really be a disk problem.
               A broken stream might be DNS, a container path, or a bad client. A controller repair can turn into a software
@@ -275,7 +275,7 @@ function HomePage() {
         <div className="wrap field-notes-grid">
           <div className="field-notes-heading">
             <p className="kicker">How I work</p>
-            <h2>Straightforward help. Real follow-through.</h2>
+            <h2>No buzzwords.<br /><em>Just figure-it-out work.</em></h2>
             <p>Employers get somebody who can talk to the person having the problem, trace the system, open the device, read the logs, and stay with it until the answer is real.</p>
           </div>
           <div className="note-board">
@@ -358,7 +358,7 @@ function WorkPage() {
         <PageTitle
           index="01"
           kicker="Work and projects"
-          title={<>The stuff I build, fix, and run.</>}
+          title={<>Projects I actually use<br />and keep <em>running.</em></>}
           intro="This is the bigger technical side of Personal Tech Wiz: homelab services, AI tools, dashboards, media systems, game servers, and repair work. Most of it started because I needed it or someone around me did."
         />
         <div className="case-list">
@@ -410,7 +410,7 @@ function ResumePage() {
         <PageTitle
           index="02"
           kicker="Résumé"
-          title={<>Resume and skills.</>}
+          title={<>Resume, skills,<br />and real <em>experience.</em></>}
           intro="I am your Personal Tech Wiz: customer support, IT help, server work, AI tools, repair work, and the patience to learn whatever the job needs next."
         />
         <section className="resume-summary">
@@ -469,8 +469,8 @@ function ServicesPage() {
         <PageTitle
           index="03"
           kicker="Services and access"
-          title={<>Hosted services.</>}
-          intro="A simple directory for the things I host: community chat, Minecraft, media, music, comics, games, and small tools. The real links stay private until each service is ready."
+          title={<>Hosted services,<br />without the private <em>doors.</em></>}
+          intro="This is the public directory for things I host or plan to open: community chat, Minecraft, media, music, comics, games, and small tools. The real links stay private until each service is ready."
         />
         <div className="privacy-line"><Check size={16} /> No private hostnames, addresses, or sign-in pages are exposed here.</div>
         <section className="service-directory" aria-label="Hosted service directory">
