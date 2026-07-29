@@ -648,6 +648,23 @@ h1 em, h2 em {
   .lightbox { padding: 18px; }
 }
 
+.ptw-editor-mode [data-content-path] {
+  cursor: pointer !important;
+  outline: 2px dashed transparent;
+  outline-offset: 4px;
+  transition: outline-color .15s ease, box-shadow .15s ease;
+}
+
+.ptw-editor-mode [data-content-path]:hover {
+  outline-color: #9d7adf;
+  box-shadow: 0 0 0 6px rgba(98, 68, 150, .14);
+}
+
+.ptw-editor-mode [data-content-path].ptw-editor-selected {
+  outline: 3px solid #b99af1;
+  box-shadow: 0 0 0 7px rgba(112, 77, 173, .22);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }

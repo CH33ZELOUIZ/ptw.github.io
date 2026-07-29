@@ -1,0 +1,60 @@
+{
+  "routes": [
+    { "key": "home", "label": "Home", "href": "#/" },
+    { "key": "skills", "label": "Skills", "href": "#/skills" },
+    { "key": "resume", "label": "Resume", "href": "#/resume" },
+    { "key": "services", "label": "Services", "href": "#/services" },
+    { "key": "bench", "label": "Repair bench", "href": "#/bench" }
+  ],
+  "systems": [
+    { "number": "01", "short": "IT support", "title": "Computers, phones, accounts, Wi‑Fi, and everyday tech problems.", "problem": "The regular problems people run into: slow devices, confusing apps, account issues, printers, updates, backups, cleanup, and setup.", "work": "I troubleshoot the device, the software, the account, and the network instead of blaming the first thing I see. I explain what happened and what to do next.", "tools": ["Windows", "macOS", "iOS", "Android", "Networking", "Accounts", "Backups"] },
+    { "number": "02", "short": "Operating systems", "title": "Help across Windows, macOS, Linux, iPhone, Android, and odd setups.", "problem": "Not every job lives on one platform. Families, small teams, and personal setups usually have a mix of devices that all need to work together.", "work": "I move between operating systems, transfer data, clean up problems, install software, fix settings, recover access, and learn unfamiliar systems when the job calls for it.", "tools": ["Linux", "Windows", "macOS", "iOS", "Android", "Data transfer", "Recovery"] },
+    { "number": "03", "short": "Servers & homelab", "title": "Linux servers, self-hosted apps, storage, backups, and remote access.", "problem": "I run real services for media, photos, game servers, automation, files, dashboards, and everyday tools. They need to stay organized and recoverable.", "work": "I handle Docker Compose stacks, storage paths, DNS, tunnels, private networking, firewalls, monitoring, updates, moves between machines, and backup/recovery checks.", "tools": ["Linux", "Docker Compose", "Tailscale", "Cloudflare", "nftables", "SMB", "Backups"] },
+    { "number": "04", "short": "Websites & tools", "title": "Websites, dashboards, scripts, and little tools that solve real problems.", "problem": "Sometimes the missing piece is not a big app. It is a cleaner homepage, a dashboard, a status page, a script, or a workflow that saves repeated manual work.", "work": "I build React pages, small utilities, service dashboards, automation scripts, API integrations, and practical admin tools that can improve over time.", "tools": ["React", "JavaScript", "Python", "Shell", "APIs", "GitHub", "Responsive UI"] },
+    { "number": "05", "short": "AI & automation", "title": "AI agents and automations that do useful work, not just chat.", "problem": "I use AI for hands-on help: server checks, Discord/iMessage workflows, scheduled jobs, research, and passing specialized problems to the right tools.", "work": "I operate Hermes agents, connect tools, schedule checks, route model providers, keep permissions separated, and test whether an automation actually did the job.", "tools": ["Hermes Agent", "Discord", "iMessage", "Python", "Model routing", "Scheduled jobs", "Webhooks"] },
+    { "number": "06", "short": "Repair bench", "title": "Consoles, controllers, older devices, cleaning, parts, and testing.", "problem": "I like giving hardware a fair chance before it gets thrown away. A lot of devices need diagnosis, cleaning, parts, software recovery, or an honest “not worth it” call.", "work": "I disassemble carefully, inspect, clean, swap parts, prepare storage, recover software when possible, test the result, and explain the risk before parts get ordered.", "tools": ["Consoles", "Controllers", "Handhelds", "PCs & Macs", "Phones", "Software recovery"] }
+  ],
+  "experience": [
+    { "dates": "March 2023 – present", "role": "IT Consultant / IT Systems Manager", "place": "Renew Range Holdings · CareFree Living Center", "location": "Minneapolis, Minnesota", "description": "I maintain computers, internet service, and connected devices. I handle support requests, hardware problems, software troubleshooting, upgrades, and the day-to-day work that keeps technology out of everyone else’s way." },
+    { "dates": "August 2020 – December 2022", "role": "Sales Associate", "place": "Walgreens", "location": "St. Louis, Missouri", "description": "Customer service in a busy store taught me how to listen, explain things clearly, stay organized, and solve the problem in front of me without making the customer feel rushed." },
+    { "dates": "June 2019 – October 2020", "role": "Assistant Store Manager", "place": "Tutti Frutti Frozen Yogurt", "location": "University City, Missouri", "description": "I handled opening and closing, inventory, equipment, deliveries, cleaning, employee training, customer issues, and whatever else needed attention that day." },
+    { "dates": "December 2019 – May 2020", "role": "Sales Associate", "place": "Schnuck Markets, Inc.", "location": "Ladue, Missouri", "description": "I supported customers and helped keep front-line store operations organized and dependable." },
+    { "dates": "August 2018 – March 2020", "role": "Guest Speaker", "place": "JCRC · Student-to-Student", "location": "Community education program", "description": "I spoke with students about Jewish practices, holidays, daily life, Israel, and culture. It pushed me to get comfortable speaking to unfamiliar groups and answering honest questions." }
+  ],
+  "serviceLinks": [
+    { "group": "Community", "name": "Discord", "description": "Community chat, support, and updates", "status": "Invite not public yet", "icon": "MessageCircle" },
+    { "group": "Game server", "name": "Minecraft", "description": "Server access, rules, and status", "status": "Address not public yet", "icon": "Gamepad2" },
+    { "group": "Game server", "name": "Minecraft map", "description": "Live world map for players", "status": "Private preview", "icon": "MapPin" },
+    { "group": "Media", "name": "Jellyfin", "description": "Movies and television", "status": "Access not public yet", "icon": "Film" },
+    { "group": "Media", "name": "Navidrome", "description": "Personal music streaming", "status": "Access not public yet", "icon": "Music2" },
+    { "group": "Library", "name": "Komga", "description": "Comics and manga", "status": "Access not public yet", "icon": "Library" },
+    { "group": "Library", "name": "RomM", "description": "Game library", "status": "Access not public yet", "icon": "Gamepad2" },
+    { "group": "Tools", "name": "More tools", "description": "Small projects, dashboards, and utilities", "status": "Directory in progress", "icon": "Boxes" }
+  ],
+  "fieldNotes": [
+    ["Operating systems", "I move between Linux, Windows, macOS, iOS, Android, and oddball setups without treating any one platform like the only answer."],
+    ["People and machines", "I can explain the problem to a person, then go back to the terminal, workbench, router, or config file and actually fix it."],
+    ["Learning fast", "When I hit something new, I read the docs, test safely, verify the result, and keep notes so the fix becomes part of my toolkit."],
+    ["One-man ownership", "I like owning the whole chain: the device, the network, the service, the user experience, and the follow-through after it ships."]
+  ],
+  "resumeHighlights": [
+    "Hands-on IT support for computers, internet service, connected devices, upgrades, and troubleshooting.",
+    "Linux homelab operator running real services, remote access, storage, backups, firewalls, and monitoring.",
+    "AI automation builder using agents, scheduled jobs, Discord/iMessage gateways, and practical tool integrations.",
+    "Repair-minded technician comfortable with consoles, controllers, PCs, Macs, phones, and older hardware."
+  ],
+  "gallery": [
+    { "src": "/assets/gallery/work-01.jpg", "alt": "Repair and modification project 1 from the Personal Tech Wiz bench", "label": "Board inspection" },
+    { "src": "/assets/gallery/work-02.jpg", "alt": "Repair and modification project 2 from the Personal Tech Wiz bench", "label": "Console teardown" },
+    { "src": "/assets/gallery/work-03.jpg", "alt": "Repair and modification project 3 from the Personal Tech Wiz bench", "label": "Parts and cleanup" },
+    { "src": "/assets/gallery/work-04.jpg", "alt": "Repair and modification project 4 from the Personal Tech Wiz bench", "label": "Device testing" },
+    { "src": "/assets/gallery/work-05.jpg", "alt": "Repair and modification project 5 from the Personal Tech Wiz bench", "label": "Workbench detail" },
+    { "src": "/assets/gallery/work-06.jpg", "alt": "Repair and modification project 6 from the Personal Tech Wiz bench", "label": "Modification prep" },
+    { "src": "/assets/gallery/work-07.jpg", "alt": "Repair and modification project 7 from the Personal Tech Wiz bench", "label": "Hardware restoration" },
+    { "src": "/assets/gallery/work-08.jpg", "alt": "Repair and modification project 8 from the Personal Tech Wiz bench", "label": "Final check" },
+    { "src": "/assets/gallery/work-09.jpg", "alt": "Repair and modification project 9 from the Personal Tech Wiz bench", "label": "Repair in progress" },
+    { "src": "/assets/gallery/work-10.jpg", "alt": "Repair and modification project 10 from the Personal Tech Wiz bench", "label": "Component work" },
+    { "src": "/assets/gallery/work-11.jpg", "alt": "Repair and modification project 11 from the Personal Tech Wiz bench", "label": "Console project" },
+    { "src": "/assets/gallery/work-12.jpg", "alt": "Repair and modification project 12 from the Personal Tech Wiz bench", "label": "Bench project" }
+  ]
+}
