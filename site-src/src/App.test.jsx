@@ -129,15 +129,30 @@ describe('Personal Tech Wiz portfolio', () => {
     expect(screen.getByText('High School Diploma')).toBeInTheDocument()
   })
 
-  it('shows requested hosted services without exposing live private links', () => {
+  it('shows requested hosted services and only explicitly entered HTTPS links', () => {
     render(<App />)
     go('#/services')
     const directory = screen.getByRole('region', { name: 'Hosted service directory' })
     for (const service of ['Discord', 'Minecraft map', 'Jellyfin', 'Komga', 'Navidrome', 'RomM']) {
       expect(within(directory).getByText(service)).toBeInTheDocument()
     }
-    expect(directory.querySelectorAll('a[href^="http"]').length).toBe(0)
-    expect(screen.getByText(/no private hostnames/i)).toBeInTheDocument()
+    const expectedLinks = content.serviceLinks
+      .map((service) => service.status)
+      .filter((status) => /^https:\/\//.test(status))
+    expect([...directory.querySelectorAll('a[href^="https://"]')].map((link) => link.href)).toEqual(expectedLinks)
+    expect(screen.getByText(content.copy.services.privacy)).toBeInTheDocument()
+  })
+
+  it('turns an explicitly entered HTTPS service status into a clickable link', () => {
+    const original = content.serviceLinks[0].status
+    content.serviceLinks[0].status = 'https://discord.gg/example'
+    try {
+      render(<App />)
+      go('#/services')
+      expect(screen.getByRole('link', { name: 'https://discord.gg/example' })).toHaveAttribute('href', 'https://discord.gg/example')
+    } finally {
+      content.serviceLinks[0].status = original
+    }
   })
 
   it('opens a bench photo in a lightbox and closes with Escape', () => {

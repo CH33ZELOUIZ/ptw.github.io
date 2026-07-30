@@ -33,6 +33,15 @@ function editProps(path) {
   return isEditorMode() ? { 'data-content-path': path } : {}
 }
 
+function publicHttpsUrl(value) {
+  try {
+    const url = new URL(value)
+    return url.protocol === 'https:' ? url.href : null
+  } catch {
+    return null
+  }
+}
+
 function currentRoute() {
   const value = window.location.hash.replace(/^#\/?/, '').split('/')[0]
   if (value === 'work') return 'skills'
@@ -283,7 +292,9 @@ function ServicesPage() {
                   <span className="service-number">{String(index + 1).padStart(2, '0')}</span>
                   <Icon size={21} />
                   <div><h3 {...editProps(`serviceLinks.${sourceIndex}.name`)}>{service.name}</h3><p {...editProps(`serviceLinks.${sourceIndex}.description`)}>{service.description}</p></div>
-                  <span className="service-state" {...editProps(`serviceLinks.${sourceIndex}.status`)}>{service.status}</span>
+                  {publicHttpsUrl(service.status)
+                    ? <a className="service-state" href={publicHttpsUrl(service.status)} target="_blank" rel="noreferrer" {...editProps(`serviceLinks.${sourceIndex}.status`)}>{service.status}</a>
+                    : <span className="service-state" {...editProps(`serviceLinks.${sourceIndex}.status`)}>{service.status}</span>}
                 </article>
               })}</div>
             </div>
