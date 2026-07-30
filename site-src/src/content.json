@@ -1,4 +1,116 @@
 {
+  "copy": {
+    "brand": {
+      "glyph": "PTW",
+      "title": "Personal Tech Wiz",
+      "name": "Jeffrey Yampol",
+      "ariaLabel": "Personal Tech Wiz home"
+    },
+    "header": {
+      "navigationLabel": "Main navigation",
+      "email": "Email me"
+    },
+    "accessibility": {
+      "skipToContent": "Skip to content",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu",
+      "helpAreas": "Areas Jeffrey can help with",
+      "resumeHighlights": "Technical resume highlights",
+      "serviceDirectory": "Hosted service directory",
+      "closeImage": "Close image"
+    },
+    "footer": {
+      "kicker": "Your Personal Tech Wiz",
+      "title": "Got a tech problem or a job opening?",
+      "email": "jeffrey@personaltechwiz.com",
+      "tagline": "Computers · servers · AI · websites · consoles · repairs",
+      "copyrightName": "Jeffrey Yampol"
+    },
+    "home": {
+      "hero": {
+        "kicker": "Friendly tech help from Jeffrey",
+        "title": "Your Personal Tech Wiz.",
+        "intro": "Hey, I’m Jeffrey. I fix, set up, explain, and build tech for people who just want it to work without getting talked down to.",
+        "note": "Bring me the weird problem: a slow computer, a broken account, a server idea, a website, a console repair, or a setup nobody else wants to untangle. I will listen first, check the real cause, and keep at it until there is a clear next step.",
+        "actions": {
+          "email": "Email me",
+          "skills": "See my skills",
+          "resume": "Read my resume"
+        },
+        "photo": {
+          "alt": "Circuit board inspection at the Personal Tech Wiz repair bench"
+        },
+        "photoCaption": {
+          "lead": "At the bench",
+          "tail": "I check first, then fix."
+        },
+        "areas": ["Computer help", "Phones & devices", "Linux servers", "Websites & tools", "Repair bench"]
+      },
+      "personal": {
+        "sideNote": "Why Personal Tech Wiz?",
+        "title": "One person for the messy middle of tech.",
+        "lead": "A lot of tech problems do not belong to one neat category. The app, the account, the router, the computer, the server, and the device can all be part of the same headache.",
+        "body": "I am comfortable moving between Linux, Windows, macOS, iOS, Android, servers, PCs, Macs, phones, tablets, consoles, handhelds, controllers, storage, networking gear, and smart-home devices. If I do not know the answer yet, I slow down, read, test, and explain what I find in normal words."
+      },
+      "howIWork": {
+        "kicker": "How I work",
+        "title": "Listen, check, fix, explain.",
+        "body": "You get somebody who can listen first, explain without talking down, open the device or logs when needed, and stay with the problem until the answer is real."
+      },
+      "howICanHelp": {
+        "kicker": "How I can help",
+        "title": "Fix problems, set things up, and make tech easier.",
+        "cards": [
+          { "number": "01", "title": "Day-to-day tech help", "body": "Computers, phones, accounts, updates, Wi‑Fi, printers, storage, backups, cleanup, and the little issues that turn into big ones when nobody owns them." },
+          { "number": "02", "title": "Websites, dashboards, and automations", "body": "I build practical tools when a spreadsheet, bookmark folder, or repeated manual step is getting in the way." },
+          { "number": "03", "title": "Repair bench work", "body": "Consoles, controllers, older devices, parts swaps, cleaning, testing, and honest calls about whether something is worth repairing." }
+        ]
+      },
+      "skillsTeaser": { "kicker": "Skills in real life", "title": "The main things I help with.", "link": "Open the full skills page" },
+      "learning": {
+        "quote": "“I don’t know yet” is a starting point, not an excuse.",
+        "steps": [
+          ["Read", "Start with the documentation and the real error, not a random guess."],
+          ["Test", "Make the smallest safe test that can prove or disprove the idea."],
+          ["Verify", "Check the real result. A command completing is not the same as the job working."],
+          ["Write it down", "Keep the fix, the reason, and the rollback path for next time."]
+        ]
+      }
+    },
+    "pages": {
+      "skills": { "index": "01", "kicker": "Skills and examples", "title": "Skills and examples.", "intro": "A cleaner look at what I can help with: everyday IT support, operating systems, servers, websites, AI tools, hosted services, game servers, and repair bench work." },
+      "resume": { "index": "02", "kicker": "Resume", "title": "Resume, skills, and experience.", "intro": "I am your Personal Tech Wiz: customer support, IT help, server work, AI tools, repair work, and the patience to learn whatever the job needs next." },
+      "services": { "index": "03", "kicker": "Services and access", "title": { "line1": "Hosted services,", "line2": "without the private doors." }, "intro": "This is the public directory for things I host or plan to open: community chat, Minecraft, media, music, comics, games, and small tools. The real links stay private until each service is ready." },
+      "bench": { "index": "04", "kicker": "Repair bench", "title": { "line1": "Take it apart carefully.", "line2": "Put it back better." }, "intro": "I like old consoles, odd failures, worn controllers, forgotten computers, and anything that makes me ask: what is actually wrong with this thing?" }
+    },
+    "skills": {
+      "range": { "kicker": "Range", "title": "I am not tied to one stack.", "groups": [["Operating systems", ["Linux", "Windows", "macOS", "iOS", "Android", "Other systems as needed"]], ["Machines and devices", ["Servers", "PCs", "Macs", "Phones", "Tablets", "Consoles", "Handhelds", "Networking gear"]], ["Infrastructure", ["Docker", "Tailscale", "Cloudflare", "DNS", "Firewalls", "Storage", "Backups", "Monitoring"]], ["Software and automation", ["React", "JavaScript", "Python", "Shell", "REST APIs", "GitHub", "AI agents", "Webhooks"]]] },
+      "systemLabels": { "skillArea": "Skill area", "examples": "Examples" }
+    },
+    "resume": {
+      "summary": "Professional summary",
+      "contact": { "name": "Jeffrey Yampol", "location": "Hollywood, Florida", "email": "jeffrey@personaltechwiz.com", "linkedinText": "LinkedIn" },
+      "summaryText": "I am a customer-focused Personal Tech Wiz with hands-on experience in IT support, electronics troubleshooting, networking, system maintenance, Linux servers, self-hosted services, and AI automation. I solve problems patiently, explain them plainly, and learn unfamiliar systems quickly.",
+      "experienceLabel": "Experience",
+      "education": { "label": "Education", "title": "High School Diploma", "schools": [["Yeshivat Kadimah High School", "2018–2021"], ["Ida Crown Jewish Academy", "2017–2018"]] },
+      "skills": { "label": "Practical skills", "columns": [["Technical support", "Desktop support", "Networking", "Operating systems", "Software troubleshooting", "Hardware diagnosis"], ["Customer service", "Store operations", "Employee training", "Inventory", "Public speaking", "Problem solving"]] }
+    },
+    "services": {
+      "privacy": "No private hostnames, addresses, or sign-in pages are exposed here.",
+      "repair": { "kicker": "Personal Tech Wiz repair", "title": "Have something broken or a mod in mind?", "body": "Send the model, what happened, what you want done, and a few clear photos. I will tell you whether it is a job I can take on and what I need to check first.", "cta": "Start with an email" },
+      "repairItems": [
+        { "title": "Consoles and handhelds", "body": "Diagnosis, cleaning, screens, shells, buttons, storage, software, and general restoration." },
+        { "title": "Controllers and mods", "body": "Cleaning, shells, buttons, drift troubleshooting, and custom builds." },
+        { "title": "Computers and operating systems", "body": "PC and Mac troubleshooting, upgrades, cleanup, networking, and software recovery." },
+        { "title": "Phones and small electronics", "body": "Older phone screens and small-device work when the parts and repair risk make sense." }
+      ]
+    },
+    "bench": {
+      "manifesto": "I do not believe every device needs to be replaced the moment it acts up. Sometimes it needs cleaning. Sometimes a cable, screen, drive, shell, or software install. Sometimes it is truly done. The first job is finding out which one.",
+      "ruleLabel": "My rule",
+      "ruleBody": "Diagnose first. Buy parts second."
+    }
+  },
   "routes": [
     { "key": "home", "label": "Home", "href": "#/" },
     { "key": "skills", "label": "Skills", "href": "#/skills" },

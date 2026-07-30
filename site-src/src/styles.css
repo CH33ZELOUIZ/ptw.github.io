@@ -367,7 +367,7 @@ h1 em, h2 em {
   font-size: 0.83rem;
 }
 .learning-grid li:first-child { border-top: 1px solid rgba(255,255,255,.17); }
-.learning-grid li span { color: #fff; font-family: var(--serif); font-size: 1.15rem; }
+.learning-grid li > span:first-child { color: #fff; font-family: var(--serif); font-size: 1.15rem; }
 
 .page-shell { min-height: 70vh; padding: 58px 0 0;background: var(--paper); color: var(--paper-ink); }
 .page-title {

@@ -22,10 +22,16 @@ import {
 
 import content from './content.json'
 
-const { routes, systems, experience, serviceLinks, fieldNotes, resumeHighlights, gallery } = content
+const { copy, routes, systems, experience, serviceLinks, fieldNotes, resumeHighlights, gallery } = content
 const iconComponents = { MessageCircle, Gamepad2, MapPin, Film, Music2, Library, Boxes }
-const editorMode = new URLSearchParams(window.location.search).get('editor') === '1'
-const editProps = (path) => editorMode ? { 'data-content-path': path } : {}
+
+function isEditorMode() {
+  return new URLSearchParams(window.location.search).get('editor') === '1'
+}
+
+function editProps(path) {
+  return isEditorMode() ? { 'data-content-path': path } : {}
+}
 
 function currentRoute() {
   const value = window.location.hash.replace(/^#\/?/, '').split('/')[0]
@@ -41,20 +47,21 @@ function useRoute() {
     return () => window.removeEventListener('hashchange', update)
   }, [])
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' })
+    window.scrollTo({ top: 0, behavior: 'auto' })
     const label = routes.find((item) => item.key === route)?.label
-    document.title = route === 'home'
-      ? 'Jeffrey Yampol | Personal Tech Wiz'
-      : `${label} | Jeffrey Yampol · Personal Tech Wiz`
+    document.title = route === 'home' ? 'Jeffrey Yampol | Personal Tech Wiz' : `${label} | Jeffrey Yampol · Personal Tech Wiz`
   }, [route])
   return route
 }
 
 function Brand() {
   return (
-    <a className="brand" href="#/" aria-label="Personal Tech Wiz home">
-      <span className="brand-glyph">PTW</span>
-      <span><strong>Personal Tech Wiz</strong><small>Jeffrey Yampol</small></span>
+    <a className="brand" href="#/" aria-label={copy.brand.ariaLabel} {...editProps('copy.brand')}>
+      <span className="brand-glyph" {...editProps('copy.brand.glyph')}>{copy.brand.glyph}</span>
+      <span>
+        <strong {...editProps('copy.brand.title')}>{copy.brand.title}</strong>
+        <small {...editProps('copy.brand.name')}>{copy.brand.name}</small>
+      </span>
     </a>
   )
 }
@@ -63,16 +70,16 @@ function Header({ route }) {
   const [open, setOpen] = useState(false)
   useEffect(() => setOpen(false), [route])
   return (
-    <header className="site-header">
+    <header className="site-header" {...editProps('copy.header')}>
       <div className="header-inner">
         <Brand />
-        <nav className={open ? 'main-nav main-nav--open' : 'main-nav'} aria-label="Main navigation">
-          {routes.map((item) => (
-            <a key={item.key} href={item.href} className={route === item.key ? 'active' : ''}>{item.label}</a>
+        <nav className={open ? 'main-nav main-nav--open' : 'main-nav'} aria-label={copy.header.navigationLabel} {...editProps('copy.header.navigationLabel')}>
+          {routes.map((item, index) => (
+            <a key={item.key} href={item.href} className={route === item.key ? 'active' : ''} {...editProps(`routes.${index}.label`)}>{item.label}</a>
           ))}
-          <a className="nav-email" href="mailto:jeffrey@personaltechwiz.com">Email me <ArrowUpRight size={14} /></a>
+          <a className="nav-email" href="mailto:jeffrey@personaltechwiz.com" {...editProps('copy.header.email')}>{copy.header.email} <ArrowUpRight size={14} /></a>
         </nav>
-        <button className="menu-button" type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label={open ? 'Close menu' : 'Open menu'}>
+        <button className="menu-button" type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label={open ? copy.accessibility.closeMenu : copy.accessibility.openMenu}>
           {open ? <X size={21} /> : <Menu size={21} />}
         </button>
       </div>
@@ -80,358 +87,233 @@ function Header({ route }) {
   )
 }
 
-function PageTitle({ index, kicker, title, intro }) {
+function renderTitle(title, path) {
+  if (title && typeof title === 'object') {
+    return <h1><span {...editProps(`${path}.line1`)}>{title.line1}</span><br /><em {...editProps(`${path}.line2`)}>{title.line2}</em></h1>
+  }
+  return <h1 {...editProps(path)}>{title}</h1>
+}
+
+function PageTitle({ index, kicker, title, intro, path }) {
   return (
-    <div className="page-title">
-      <div className="page-index">{index}</div>
+    <div className="page-title" {...editProps(path)}>
+      <div className="page-index" {...editProps(`${path}.index`)}>{index}</div>
       <div>
-        <p className="kicker">{kicker}</p>
-        <h1>{title}</h1>
-        {intro && <p className="page-intro">{intro}</p>}
+        <p className="kicker" {...editProps(`${path}.kicker`)}>{kicker}</p>
+        {renderTitle(title, `${path}.title`)}
+        {intro && <p className="page-intro" {...editProps(`${path}.intro`)}>{intro}</p>}
       </div>
     </div>
   )
 }
 
-function RouteLink({ to, children, className = 'text-link' }) {
-  return <a className={className} href={`#/${to}`}>{children} <ArrowRight size={16} /></a>
+function RouteLink({ to, children, className = 'text-link', path }) {
+  return <a className={className} href={`#/${to}`} {...editProps(path)}>{children} <ArrowRight size={16} /></a>
 }
 
 function HomePage() {
-  return (
-    <>
-      <section className="home-hero">
-        <div className="wrap hero-layout">
-          <div className="hero-copy">
-            <p className="kicker">Friendly tech help from Jeffrey</p>
-            <h1>Your Personal Tech Wiz.</h1>
-            <p className="hero-intro">
-              Hey, I&apos;m Jeffrey. I fix, set up, explain, and build tech for people who just want it
-              to work without getting talked down to.
-            </p>
-            <p className="hero-note">
-              Bring me the weird problem: a slow computer, a broken account, a server idea, a website,
-              a console repair, or a setup nobody else wants to untangle. I will listen first, check the
-              real cause, and keep at it until there is a clear next step.
-            </p>
-            <div className="hero-actions">
-              <a className="button" href="mailto:jeffrey@personaltechwiz.com">Email me</a>
-              <RouteLink to="skills" className="quiet-link">See my skills</RouteLink>
-              <RouteLink to="resume" className="quiet-link">Read my resume</RouteLink>
-            </div>
-          </div>
-          <figure className="hero-photo">
-            <img src="/assets/gallery/work-01.jpg" alt="Circuit board inspection at the Personal Tech Wiz repair bench" />
-            <figcaption><span>At the bench</span> I check first, then fix.</figcaption>
-          </figure>
-        </div>
-        <div className="wrap hero-ledger" aria-label="Areas Jeffrey can help with">
-          {['Computer help', 'Phones & devices', 'Linux servers', 'Websites & tools', 'Repair bench'].map((item) => (
-            <span key={item}>{item}</span>
-          ))}
-        </div>
-      </section>
-
-      <section className="paper-section">
-        <div className="wrap personal-grid">
-          <div className="side-note">Why Personal Tech Wiz?</div>
-          <div className="personal-copy">
-            <h2>One person for the messy middle of tech.</h2>
-            <p className="large-copy">
-              A lot of tech problems do not belong to one neat category. The app, the account, the router,
-              the computer, the server, and the device can all be part of the same headache.
-            </p>
-            <p>
-              I am comfortable moving between Linux, Windows, macOS, iOS, Android, servers, PCs, Macs, phones,
-              tablets, consoles, handhelds, controllers, storage, networking gear, and smart-home devices. If I do
-              not know the answer yet, I slow down, read, test, and explain what I find in normal words.
-            </p>
+  const hero = copy.home.hero
+  return <>
+    <section className="home-hero">
+      <div className="wrap hero-layout">
+        <div className="hero-copy">
+          <p className="kicker" {...editProps('copy.home.hero.kicker')}>{hero.kicker}</p>
+          <h1 {...editProps('copy.home.hero.title')}>{hero.title}</h1>
+          <p className="hero-intro" {...editProps('copy.home.hero.intro')}>{hero.intro}</p>
+          <p className="hero-note" {...editProps('copy.home.hero.note')}>{hero.note}</p>
+          <div className="hero-actions">
+            <a className="button" href="mailto:jeffrey@personaltechwiz.com" {...editProps('copy.home.hero.actions.email')}>{hero.actions.email}</a>
+            <RouteLink to="skills" className="quiet-link" path="copy.home.hero.actions.skills">{hero.actions.skills}</RouteLink>
+            <RouteLink to="resume" className="quiet-link" path="copy.home.hero.actions.resume">{hero.actions.resume}</RouteLink>
           </div>
         </div>
-      </section>
-
-      <section className="paper-section field-notes-section">
-        <div className="wrap field-notes-grid">
-          <div className="field-notes-heading">
-            <p className="kicker">How I work</p>
-            <h2>Listen, check, fix, explain.</h2>
-            <p>You get somebody who can listen first, explain without talking down, open the device or logs when needed, and stay with the problem until the answer is real.</p>
-          </div>
-          <div className="note-board">
-            {fieldNotes.map(([title, body], index) => (
-              <article key={title} className="note-card" {...editProps(`fieldNotes.${index}`)}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <h3>{title}</h3>
-                <p>{body}</p>
-              </article>
-            ))}
-          </div>
+        <figure className="hero-photo" {...editProps('copy.home.hero.photo')}>
+          <img src="/assets/gallery/work-01.jpg" alt={hero.photo.alt} {...editProps('copy.home.hero.photo.alt')} />
+          <figcaption><span {...editProps('copy.home.hero.photoCaption.lead')}>{hero.photoCaption.lead}</span> <span {...editProps('copy.home.hero.photoCaption.tail')}>{hero.photoCaption.tail}</span></figcaption>
+        </figure>
+      </div>
+      <div className="wrap hero-ledger" aria-label={copy.accessibility.helpAreas}>{hero.areas.map((item, index) => <span key={item} {...editProps(`copy.home.hero.areas.${index}`)}>{item}</span>)}</div>
+    </section>
+    <section className="paper-section">
+      <div className="wrap personal-grid">
+        <div className="side-note" {...editProps('copy.home.personal.sideNote')}>{copy.home.personal.sideNote}</div>
+        <div className="personal-copy">
+          <h2 {...editProps('copy.home.personal.title')}>{copy.home.personal.title}</h2>
+          <p className="large-copy" {...editProps('copy.home.personal.lead')}>{copy.home.personal.lead}</p>
+          <p {...editProps('copy.home.personal.body')}>{copy.home.personal.body}</p>
         </div>
-      </section>
-
-      <section className="dark-section what-i-do">
-        <div className="wrap">
-          <div className="section-heading">
-            <p className="kicker">How I can help</p>
-            <h2>Fix problems, set things up, and make tech easier.</h2>
-          </div>
-          <div className="practice-list">
-            <article>
-              <span>01</span>
-              <h3>Day-to-day tech help</h3>
-              <p>Computers, phones, accounts, updates, Wi‑Fi, printers, storage, backups, cleanup, and the little issues that turn into big ones when nobody owns them.</p>
-            </article>
-            <article>
-              <span>02</span>
-              <h3>Websites, dashboards, and automations</h3>
-              <p>I build practical tools when a spreadsheet, bookmark folder, or repeated manual step is getting in the way.</p>
-            </article>
-            <article>
-              <span>03</span>
-              <h3>Repair bench work</h3>
-              <p>Consoles, controllers, older devices, parts swaps, cleaning, testing, and honest calls about whether something is worth repairing.</p>
-            </article>
-          </div>
+      </div>
+    </section>
+    <section className="paper-section field-notes-section">
+      <div className="wrap field-notes-grid">
+        <div className="field-notes-heading">
+          <p className="kicker" {...editProps('copy.home.howIWork.kicker')}>{copy.home.howIWork.kicker}</p>
+          <h2 {...editProps('copy.home.howIWork.title')}>{copy.home.howIWork.title}</h2>
+          <p {...editProps('copy.home.howIWork.body')}>{copy.home.howIWork.body}</p>
         </div>
-      </section>
-
-      <section className="paper-section selected-work">
-        <div className="wrap selected-grid">
-          <div>
-            <p className="kicker">Skills in real life</p>
-            <h2>The main things I help with.</h2>
-            <RouteLink to="skills">Open the full skills page</RouteLink>
-          </div>
-          <div className="work-index">
-            {systems.slice(0, 4).map((system) => (
-              <a href="#/skills" key={system.number} {...editProps(`systems.${systems.indexOf(system)}`)}>
-                <span>{system.number}</span>
-                <strong>{system.short}</strong>
-                <p>{system.title}</p>
-                <ArrowUpRight size={18} />
-              </a>
-            ))}
-          </div>
+        <div className="note-board">
+          {fieldNotes.map(([title, body], index) => <article key={title} className="note-card"><span>{String(index + 1).padStart(2, '0')}</span><h3 {...editProps(`fieldNotes.${index}.0`)}>{title}</h3><p {...editProps(`fieldNotes.${index}.1`)}>{body}</p></article>)}
         </div>
-      </section>
-
-      <section className="learning-section">
-        <div className="wrap learning-grid">
-          <div className="learning-quote">“I don&apos;t know yet” is a starting point, not an excuse.</div>
-          <ol>
-            <li><span>Read</span>Start with the documentation and the real error, not a random guess.</li>
-            <li><span>Test</span>Make the smallest safe test that can prove or disprove the idea.</li>
-            <li><span>Verify</span>Check the real result. A command completing is not the same as the job working.</li>
-            <li><span>Write it down</span>Keep the fix, the reason, and the rollback path for next time.</li>
-          </ol>
+      </div>
+    </section>
+    <section className="dark-section what-i-do">
+      <div className="wrap">
+        <div className="section-heading">
+          <p className="kicker" {...editProps('copy.home.howICanHelp.kicker')}>{copy.home.howICanHelp.kicker}</p>
+          <h2 {...editProps('copy.home.howICanHelp.title')}>{copy.home.howICanHelp.title}</h2>
         </div>
-      </section>
-    </>
-  )
+        <div className="practice-list">{copy.home.howICanHelp.cards.map((card, index) => <article key={card.number}><span {...editProps(`copy.home.howICanHelp.cards.${index}.number`)}>{card.number}</span><h3 {...editProps(`copy.home.howICanHelp.cards.${index}.title`)}>{card.title}</h3><p {...editProps(`copy.home.howICanHelp.cards.${index}.body`)}>{card.body}</p></article>)}</div>
+      </div>
+    </section>
+    <section className="paper-section selected-work">
+      <div className="wrap selected-grid">
+        <div>
+          <p className="kicker" {...editProps('copy.home.skillsTeaser.kicker')}>{copy.home.skillsTeaser.kicker}</p>
+          <h2 {...editProps('copy.home.skillsTeaser.title')}>{copy.home.skillsTeaser.title}</h2>
+          <RouteLink to="skills" path="copy.home.skillsTeaser.link">{copy.home.skillsTeaser.link}</RouteLink>
+        </div>
+        <div className="work-index">{systems.slice(0, 4).map((system, index) => <a href="#/skills" key={system.number}><span {...editProps(`systems.${index}.number`)}>{system.number}</span><strong {...editProps(`systems.${index}.short`)}>{system.short}</strong><p {...editProps(`systems.${index}.title`)}>{system.title}</p><ArrowUpRight size={18} /></a>)}</div>
+      </div>
+    </section>
+    <section className="learning-section">
+      <div className="wrap learning-grid">
+        <div className="learning-quote" {...editProps('copy.home.learning.quote')}>{copy.home.learning.quote}</div>
+        <ol>{copy.home.learning.steps.map(([label, body], index) => <li key={label}><span {...editProps(`copy.home.learning.steps.${index}.0`)}>{label}</span><span {...editProps(`copy.home.learning.steps.${index}.1`)}>{body}</span></li>)}</ol>
+      </div>
+    </section>
+  </>
 }
 
 function SkillsPage() {
   return (
-    <main className="page-shell">
+    <section className="page-shell">
       <div className="wrap">
-        <PageTitle
-          index="01"
-          kicker="Skills and examples"
-          title={<>Skills and examples.</>}
-          intro="A cleaner look at what I can help with: everyday IT support, operating systems, servers, websites, AI tools, hosted services, game servers, and repair bench work."
-        />
+        <PageTitle {...copy.pages.skills} path="copy.pages.skills" />
         <div className="case-list">
-          {systems.map((system) => (
-            <article className="case-study" key={system.number} {...editProps(`systems.${systems.indexOf(system)}`)}>
-              <aside><span>{system.number}</span><strong>{system.short}</strong></aside>
+          {systems.map((system, index) => (
+            <article className="case-study" key={system.number}>
+              <aside>
+                <span {...editProps(`systems.${index}.number`)}>{system.number}</span>
+                <strong {...editProps(`systems.${index}.short`)}>{system.short}</strong>
+              </aside>
               <div className="case-main">
-                <h2>{system.title}</h2>
+                <h2 {...editProps(`systems.${index}.title`)}>{system.title}</h2>
                 <div className="case-copy">
-                  <div><h3>Skill area</h3><p>{system.problem}</p></div>
-                  <div><h3>Examples</h3><p>{system.work}</p></div>
+                  <div><h3 {...editProps('copy.skills.systemLabels.skillArea')}>{copy.skills.systemLabels.skillArea}</h3><p {...editProps(`systems.${index}.problem`)}>{system.problem}</p></div>
+                  <div><h3 {...editProps('copy.skills.systemLabels.examples')}>{copy.skills.systemLabels.examples}</h3><p {...editProps(`systems.${index}.work`)}>{system.work}</p></div>
                 </div>
-                <div className="tool-line">{system.tools.map((tool) => <span key={tool}>{tool}</span>)}</div>
+                <div className="tool-line">{system.tools.map((tool, toolIndex) => <span key={tool} {...editProps(`systems.${index}.tools.${toolIndex}`)}>{tool}</span>)}</div>
               </div>
             </article>
           ))}
         </div>
       </div>
       <TechRange />
-    </main>
+    </section>
   )
 }
 
 function TechRange() {
-  const groups = [
-    ['Operating systems', ['Linux', 'Windows', 'macOS', 'iOS', 'Android', 'Other systems as needed']],
-    ['Machines and devices', ['Servers', 'PCs', 'Macs', 'Phones', 'Tablets', 'Consoles', 'Handhelds', 'Networking gear']],
-    ['Infrastructure', ['Docker', 'Tailscale', 'Cloudflare', 'DNS', 'Firewalls', 'Storage', 'Backups', 'Monitoring']],
-    ['Software and automation', ['React', 'JavaScript', 'Python', 'Shell', 'REST APIs', 'GitHub', 'AI agents', 'Webhooks']],
-  ]
+  return <section className="range-section"><div className="wrap"><div className="section-heading compact"><p className="kicker" {...editProps('copy.skills.range.kicker')}>{copy.skills.range.kicker}</p><h2 {...editProps('copy.skills.range.title')}>{copy.skills.range.title}</h2></div><div className="range-grid">{copy.skills.range.groups.map(([title, items], groupIndex) => <div key={title}><h3 {...editProps(`copy.skills.range.groups.${groupIndex}.0`)}>{title}</h3><ul>{items.map((item, itemIndex) => <li key={item} {...editProps(`copy.skills.range.groups.${groupIndex}.1.${itemIndex}`)}>{item}</li>)}</ul></div>)}</div></div></section>
+}
+
+function ResumePage() {
   return (
-    <section className="range-section">
+    <section className="page-shell resume-page">
       <div className="wrap">
-        <div className="section-heading compact"><p className="kicker">Range</p><h2>I am not tied to one stack.</h2></div>
-        <div className="range-grid">
-          {groups.map(([title, items]) => (
-            <div key={title}><h3>{title}</h3><ul>{items.map((item) => <li key={item}>{item}</li>)}</ul></div>
-          ))}
-        </div>
+        <PageTitle {...copy.pages.resume} path="copy.pages.resume" />
+        <section className="resume-summary">
+          <div className="resume-contact">
+            <p {...editProps('copy.resume.contact.name')}>{copy.resume.contact.name}</p>
+            <span {...editProps('copy.resume.contact.location')}>{copy.resume.contact.location}</span>
+            <a href="mailto:jeffrey@personaltechwiz.com" {...editProps('copy.resume.contact.email')}>{copy.resume.contact.email}</a>
+            <a href="https://www.linkedin.com/in/jeffrey-yampol-42756b187" target="_blank" rel="noreferrer" {...editProps('copy.resume.contact.linkedinText')}>{copy.resume.contact.linkedinText} <ExternalLink size={13} /></a>
+          </div>
+          <div><h2 {...editProps('copy.resume.summary')}>{copy.resume.summary}</h2><p {...editProps('copy.resume.summaryText')}>{copy.resume.summaryText}</p></div>
+        </section>
+        <section className="resume-highlights" aria-label={copy.accessibility.resumeHighlights}>
+          {resumeHighlights.map((item, index) => <p key={item} {...editProps(`resumeHighlights.${index}`)}>{item}</p>)}
+        </section>
+        <section className="experience-section">
+          <div className="resume-section-label" {...editProps('copy.resume.experienceLabel')}>{copy.resume.experienceLabel}</div>
+          <div className="experience-list">
+            {experience.map((item, index) => <article key={`${item.role}-${item.dates}`}>
+              <div className="experience-meta"><span {...editProps(`experience.${index}.dates`)}>{item.dates}</span><small {...editProps(`experience.${index}.location`)}>{item.location}</small></div>
+              <div><h2 {...editProps(`experience.${index}.role`)}>{item.role}</h2><h3 {...editProps(`experience.${index}.place`)}>{item.place}</h3><p {...editProps(`experience.${index}.description`)}>{item.description}</p></div>
+            </article>)}
+          </div>
+        </section>
+        <section className="resume-bottom">
+          <div>
+            <div className="resume-section-label" {...editProps('copy.resume.education.label')}>{copy.resume.education.label}</div>
+            <h2 {...editProps('copy.resume.education.title')}>{copy.resume.education.title}</h2>
+            {copy.resume.education.schools.map(([school, dates], index) => <p key={school}><span {...editProps(`copy.resume.education.schools.${index}.0`)}>{school}</span><br /><span {...editProps(`copy.resume.education.schools.${index}.1`)}>{dates}</span></p>)}
+          </div>
+          <div>
+            <div className="resume-section-label" {...editProps('copy.resume.skills.label')}>{copy.resume.skills.label}</div>
+            <div className="skills-columns">{copy.resume.skills.columns.map((column, columnIndex) => <ul key={columnIndex}>{column.map((skill, itemIndex) => <li key={skill} {...editProps(`copy.resume.skills.columns.${columnIndex}.${itemIndex}`)}>{skill}</li>)}</ul>)}</div>
+          </div>
+        </section>
       </div>
     </section>
   )
 }
 
-function ResumePage() {
-  return (
-    <main className="page-shell resume-page">
-      <div className="wrap">
-        <PageTitle
-          index="02"
-          kicker="Resume"
-          title={<>Resume, skills, and experience.</>}
-          intro="I am your Personal Tech Wiz: customer support, IT help, server work, AI tools, repair work, and the patience to learn whatever the job needs next."
-        />
-        <section className="resume-summary">
-          <div className="resume-contact">
-            <p>Jeffrey Yampol</p>
-            <span>Hollywood, Florida</span>
-            <a href="mailto:jeffrey@personaltechwiz.com">jeffrey@personaltechwiz.com</a>
-            <a href="https://www.linkedin.com/in/jeffrey-yampol-42756b187" target="_blank" rel="noreferrer">LinkedIn <ExternalLink size={13} /></a>
-          </div>
-          <div>
-            <h2>Professional summary</h2>
-            <p>I am a customer-focused Personal Tech Wiz with hands-on experience in IT support, electronics troubleshooting, networking, system maintenance, Linux servers, self-hosted services, and AI automation. I solve problems patiently, explain them plainly, and learn unfamiliar systems quickly.</p>
-          </div>
-        </section>
-        <section className="resume-highlights" aria-label="Technical resume highlights">
-          {resumeHighlights.map((item) => <p key={item}>{item}</p>)}
-        </section>
-        <section className="experience-section">
-          <div className="resume-section-label">Experience</div>
-          <div className="experience-list">
-            {experience.map((item) => (
-              <article key={`${item.role}-${item.dates}`} {...editProps(`experience.${experience.indexOf(item)}`)}>
-                <div className="experience-meta"><span>{item.dates}</span><small>{item.location}</small></div>
-                <div><h2>{item.role}</h2><h3>{item.place}</h3><p>{item.description}</p></div>
-              </article>
-            ))}
-          </div>
-        </section>
-        <section className="resume-bottom">
-          <div>
-            <div className="resume-section-label">Education</div>
-            <h2>High School Diploma</h2>
-            <p>Yeshivat Kadimah High School<br /><span>2018–2021</span></p>
-            <p>Ida Crown Jewish Academy<br /><span>2017–2018</span></p>
-          </div>
-          <div>
-            <div className="resume-section-label">Practical skills</div>
-            <div className="plain-columns">
-              <ul><li>Technical support</li><li>Desktop support</li><li>Networking</li><li>Operating systems</li><li>Software troubleshooting</li><li>Hardware diagnosis</li></ul>
-              <ul><li>Customer service</li><li>Store operations</li><li>Employee training</li><li>Inventory</li><li>Public speaking</li><li>Problem solving</li></ul>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
-  )
+function RepairIcon({ index }) {
+  const Icon = [Wrench, Gamepad2, Monitor, Smartphone][index] || Wrench
+  return <Icon size={19} />
 }
 
 function ServicesPage() {
-  const groupedServices = [...new Set(serviceLinks.map((service) => service.group))]
-    .map((group) => [group, serviceLinks.filter((service) => service.group === group)])
-
+  const groupedServices = [...new Set(serviceLinks.map((service) => service.group))].map((group) => [group, serviceLinks.filter((service) => service.group === group)])
   return (
-    <main className="page-shell services-page">
+    <section className="page-shell services-page">
       <div className="wrap">
-        <PageTitle
-          index="03"
-          kicker="Services and access"
-          title={<>Hosted services,<br />without the private <em>doors.</em></>}
-          intro="This is the public directory for things I host or plan to open: community chat, Minecraft, media, music, comics, games, and small tools. The real links stay private until each service is ready."
-        />
-        <div className="privacy-line"><Check size={16} /> No private hostnames, addresses, or sign-in pages are exposed here.</div>
-        <section className="service-directory" aria-label="Hosted service directory">
-          {groupedServices.map(([group, services]) => (
-            <div className="service-group" key={group}>
-              <h2>{group}</h2>
-              <div>
-                {services.map((service, index) => {
-                  const { name, description, status, icon } = service
-                  const Icon = iconComponents[icon] || Boxes
-                  const sourceIndex = serviceLinks.indexOf(service)
-                  return (
-                  <article key={name} {...editProps(`serviceLinks.${sourceIndex}`)}>
-                    <span className="service-number">{String(index + 1).padStart(2, '0')}</span>
-                    <Icon size={21} />
-                    <div><h3>{name}</h3><p>{description}</p></div>
-                    <span className="service-state">{status}</span>
-                  </article>
-                  )
-                })}
-              </div>
+        <PageTitle {...copy.pages.services} path="copy.pages.services" />
+        <div className="privacy-line"><Check size={16} /> <span {...editProps('copy.services.privacy')}>{copy.services.privacy}</span></div>
+        <section className="service-directory" aria-label={copy.accessibility.serviceDirectory}>
+          {groupedServices.map(([group, services]) => {
+            const groupIndex = serviceLinks.indexOf(services[0])
+            return <div className="service-group" key={group}>
+              <h2 {...editProps(`serviceLinks.${groupIndex}.group`)}>{group}</h2>
+              <div>{services.map((service, index) => {
+                const Icon = iconComponents[service.icon] || Boxes
+                const sourceIndex = serviceLinks.indexOf(service)
+                return <article key={service.name}>
+                  <span className="service-number">{String(index + 1).padStart(2, '0')}</span>
+                  <Icon size={21} />
+                  <div><h3 {...editProps(`serviceLinks.${sourceIndex}.name`)}>{service.name}</h3><p {...editProps(`serviceLinks.${sourceIndex}.description`)}>{service.description}</p></div>
+                  <span className="service-state" {...editProps(`serviceLinks.${sourceIndex}.status`)}>{service.status}</span>
+                </article>
+              })}</div>
             </div>
-          ))}
+          })}
         </section>
       </div>
       <section className="repair-services">
         <div className="wrap repair-service-grid">
-          <div>
-            <p className="kicker">Personal Tech Wiz repair</p>
-            <h2>Have something broken or a mod in mind?</h2>
-            <p>Send the model, what happened, what you want done, and a few clear photos. I will tell you whether it is a job I can take on and what I need to check first.</p>
-            <a className="button light-button" href="mailto:jeffrey@personaltechwiz.com">Start with an email <Mail size={16} /></a>
-          </div>
-          <ul>
-            <li><Wrench size={19} /><span><strong>Consoles and handhelds</strong>Diagnosis, cleaning, screens, shells, buttons, storage, software, and general restoration.</span></li>
-            <li><Gamepad2 size={19} /><span><strong>Controllers and mods</strong>Cleaning, shells, buttons, drift troubleshooting, and custom builds.</span></li>
-            <li><Monitor size={19} /><span><strong>Computers and operating systems</strong>PC and Mac troubleshooting, upgrades, cleanup, networking, and software recovery.</span></li>
-            <li><Smartphone size={19} /><span><strong>Phones and small electronics</strong>Older phone screens and small-device work when the parts and repair risk make sense.</span></li>
-          </ul>
+          <div><p className="kicker" {...editProps('copy.services.repair.kicker')}>{copy.services.repair.kicker}</p><h2 {...editProps('copy.services.repair.title')}>{copy.services.repair.title}</h2><p {...editProps('copy.services.repair.body')}>{copy.services.repair.body}</p><a className="button light-button" href="mailto:jeffrey@personaltechwiz.com" {...editProps('copy.services.repair.cta')}>{copy.services.repair.cta} <Mail size={16} /></a></div>
+          <ul>{copy.services.repairItems.map((item, index) => <li key={item.title}><RepairIcon index={index} /><span><strong {...editProps(`copy.services.repairItems.${index}.title`)}>{item.title}</strong><span {...editProps(`copy.services.repairItems.${index}.body`)}>{item.body}</span></span></li>)}</ul>
         </div>
       </section>
-    </main>
+    </section>
   )
 }
 
 function BenchPage({ openImage }) {
   return (
-    <main className="page-shell bench-page">
+    <section className="page-shell bench-page">
       <div className="wrap">
-        <PageTitle
-          index="04"
-          kicker="Repair bench"
-          title={<>Take it apart carefully.<br /><em>Put it back better.</em></>}
-          intro="I like old consoles, odd failures, worn controllers, forgotten computers, and anything that makes me ask: what is actually wrong with this thing?"
-        />
-        <div className="bench-manifesto">
-          <p>I do not believe every device needs to be replaced the moment it acts up. Sometimes it needs cleaning. Sometimes a cable, screen, drive, shell, or software install. Sometimes it is truly done. The first job is finding out which one.</p>
-          <div><span>My rule</span>Diagnose first. Buy parts second.</div>
-        </div>
-        <div className="photo-grid">
-          {gallery.map((image, index) => (
-            <button type="button" key={image.src} className={`photo photo-${(index % 7) + 1}`} onClick={() => openImage(image)} {...editProps(`gallery.${index}`)}>
-              <img src={image.src} alt={image.alt} loading={index > 2 ? 'lazy' : 'eager'} />
-              <span><b>{String(index + 1).padStart(2, '0')}</b>{image.label}<ImageIcon size={14} /></span>
-            </button>
-          ))}
-        </div>
+        <PageTitle {...copy.pages.bench} path="copy.pages.bench" />
+        <div className="bench-manifesto"><p {...editProps('copy.bench.manifesto')}>{copy.bench.manifesto}</p><div><span {...editProps('copy.bench.ruleLabel')}>{copy.bench.ruleLabel}</span><span {...editProps('copy.bench.ruleBody')}>{copy.bench.ruleBody}</span></div></div>
+        <div className="photo-grid">{gallery.map((image, index) => <button type="button" key={image.src} className={`photo photo-${(index % 7) + 1}`} onClick={() => openImage(image)}><img src={image.src} alt={image.alt} loading={index > 2 ? 'lazy' : 'eager'} {...editProps(`gallery.${index}.alt`)} /><span><b>{String(index + 1).padStart(2, '0')}</b><span {...editProps(`gallery.${index}.label`)}>{image.label}</span><ImageIcon size={14} /></span></button>)}</div>
       </div>
-    </main>
+    </section>
   )
 }
 
 function Footer() {
-  return (
-    <footer className="site-footer">
-      <div className="wrap footer-main">
-        <div><p className="kicker">Your Personal Tech Wiz</p><h2>Got a tech problem or a job opening?</h2></div>
-        <div><a className="footer-email" href="mailto:jeffrey@personaltechwiz.com">jeffrey@personaltechwiz.com <ArrowUpRight size={22} /></a><p>Computers · servers · AI · websites · consoles · repairs</p></div>
-      </div>
-      <div className="wrap footer-bottom"><Brand /><span>© {new Date().getFullYear()} Jeffrey Yampol</span></div>
-    </footer>
-  )
+  return <footer className="site-footer" {...editProps('copy.footer')}><div className="wrap footer-main"><div><p className="kicker" {...editProps('copy.footer.kicker')}>{copy.footer.kicker}</p><h2 {...editProps('copy.footer.title')}>{copy.footer.title}</h2></div><div><a className="footer-email" href={`mailto:${copy.footer.email}`} {...editProps('copy.footer.email')}>{copy.footer.email} <ArrowUpRight size={22} /></a><p {...editProps('copy.footer.tagline')}>{copy.footer.tagline}</p></div></div><div className="wrap footer-bottom"><Brand /><span {...editProps('copy.footer.copyrightName')}>© {new Date().getFullYear()} {copy.footer.copyrightName}</span></div></footer>
 }
 
 function Lightbox({ image, onClose }) {
@@ -446,25 +328,19 @@ function Lightbox({ image, onClose }) {
     }
   }, [image, onClose])
   if (!image) return null
-  return (
-    <div className="lightbox" role="dialog" aria-modal="true" aria-label={image.label} onMouseDown={(event) => event.currentTarget === event.target && onClose()}>
-      <button type="button" onClick={onClose} aria-label="Close image"><X size={22} /></button>
-      <figure><img src={image.src} alt={image.alt} /><figcaption>{image.label}</figcaption></figure>
-    </div>
-  )
+  return <div className="lightbox" role="dialog" aria-modal="true" aria-label={image.label} onMouseDown={(event) => event.currentTarget === event.target && onClose()}><button type="button" onClick={onClose} aria-label={copy.accessibility.closeImage}><X size={22} /></button><figure><img src={image.src} alt={image.alt} /><figcaption>{image.label}</figcaption></figure></div>
 }
 
 function App() {
   const route = useRoute()
   const [lightbox, setLightbox] = useState(null)
   useEffect(() => {
-    if (!editorMode) return undefined
+    if (!isEditorMode()) return undefined
     document.documentElement.classList.add('ptw-editor-mode')
     const click = (event) => {
       const target = event.target.closest('[data-content-path]')
       if (!target) return
-      event.preventDefault()
-      event.stopPropagation()
+      event.preventDefault(); event.stopPropagation()
       document.querySelectorAll('.ptw-editor-selected').forEach((el) => el.classList.remove('ptw-editor-selected'))
       target.classList.add('ptw-editor-selected')
       window.parent.postMessage({ type: 'ptw-select', path: target.dataset.contentPath }, window.location.origin)
@@ -486,16 +362,7 @@ function App() {
     if (route === 'bench') return <BenchPage openImage={setLightbox} />
     return <HomePage />
   }, [route])
-
-  return (
-    <>
-      <a className="skip-link" href="#page-content">Skip to content</a>
-      <Header route={route} />
-      <div id="page-content">{page}</div>
-      <Footer />
-      <Lightbox image={lightbox} onClose={() => setLightbox(null)} />
-    </>
-  )
+  return <><a className="skip-link" href="#page-content" {...editProps('copy.accessibility.skipToContent')}>{copy.accessibility.skipToContent}</a><Header route={route} /><main id="page-content" tabIndex="-1">{page}</main><Footer /><Lightbox image={lightbox} onClose={() => setLightbox(null)} /></>
 }
 
 export default App
